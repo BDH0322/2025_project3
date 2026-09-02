@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC.GG - 메인 페이지</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <script defer th:src="@{/js/main.js}"></script>
+</head>
+<body>
+<header th:replace="~{layout/header::header}"></header>
+
+<main class="main-container">
+    <div class="main-content-logo">
+        <img th:src="@{/images/ufcgg_logo.svg}" alt="UFC.GG Logo" class="main-content-logo-image">
+    </div>
+
+    <form action="/FrontController/integratedSearch" class="main-content-search">
+        <input type="text" name="keyword" placeholder="선수 이름, 경기 일정, 랭킹 정보 검색..." class="main-content-search-input">
+
+        <button class="main-content-search-button" type="submit">검색</button>
+    </form>
+
+    <div class="main-content-ranking">
+        <h2 class="ranking-topic">🔥 실시간 인기 검색 선수 🔥</h2>
+
+        <ol class="ranking-list">
+            <th:block th:if="${results != null and results.popularFighters != null}">
+                <li th:each="fighter, stat : ${results.popularFighters}" class="ranking-item">
+                    <a th:href="@{/fighter/{name}(name=${fighter.name})}" style="text-decoration: none; color: inherit;">
+                        <span class="fighter-name" th:text="${stat.count} + '. ' + ${fighter.name}">1. 선수명</span>
+                        <span class="ranking-change up">HOT</span>
+                    </a>
+                </li>
+            </th:block>
+        </ol>
+        <p th:if="${results == null or #lists.isEmpty(results.popularFighters)}" class="no-data">
+            현재 실시간 인기 검색 정보가 없습니다.
+        </p>
+    </div>
+</main>
+
+<section class="mainunder-container">
+
+    <div class="mainunder-category1">
+        <h2>🥇 선수 순위 (체급별)</h2>
+        <p class="description">체급별 랭킹 데이터</p>
+        <ol class="list-cat1">
+            <li th:each="fighter : ${fighterRanking}" class="item-cat1">
+                <a th:href="@{fighter/{name}(name=${fighter.name})}" class="link-cat1">
+                <span class="info-cat1">
+                    <strong class="rank-num-cat1" th:text="${fighter.rankNum} + '등'">C</strong>
+                    <span class="name-cat1" th:text="${fighter.name}">선수명</span>
+                </span>
+                </a>
+            </li>
+        </ol>
+        <p th:if="${#lists.isEmpty(fighterRanking)}" class="nodata-cat1">데이터가 없습니다.</p>
+    </div>
+
+    <div class="mainunder-category2">
+        <h2>💰 이번 주 인기 파이터 TOP10</h2>
+        <p class="description">실시간 데이터 기반 분석 (검색 3/제목 2/본문 1/댓글 1)</p>
+        <ol class="list-cat2">
+            <li th:each="rank, stat : ${rankList}" th:if="${stat.index < 10}" class="item-cat2">
+                <a th:href="@{/fighter/{name}(name=${rank[0]})}" class="link-cat2">
+                <span class="info-cat2">
+                    <strong th:text="${rank[0]}">선수명</strong>
+                </span>
+                    <span class="pts-cat2" th:text="${rank[1]} + ' pts'">포인트</span>
+                </a>
+            </li>
+        </ol>
+    </div>
+
+    <div class="mainunder-category3">
+        <h2>🔥 HOT 인기 게시글</h2>
+        <p class="description">좋아요 3개 이상 게시글</p>
+        <div class="list-cat3">
+            <div th:each="post:${post}" class="item-cat3">
+                <a th:href="@{/community/communitypost(communityContentNumber=${post.communityContentNumber})}" class="link-cat3">
+                    <span class="title-cat3" th:text="${post.communityTitle}">게시글 제목</span>
+                    <span class="badge-cat3" th:text="'❤️ ' + ${post.communityLike}">❤️ 3</span>
+                </a>
+            </div>
+        </div>
+        <p th:if="${#lists.isEmpty(post)}" class="nodata-cat3">인기 게시글이 없습니다.</p>
+    </div>
+
+    <div class="mainunder-category4">
+        <h2>📅 요즘 메타 분석</h2>
+        <div th:if="${metadata != null}">
+            <h3 th:text="${metadata.metaTitle}">메타 타이틀</h3>
+            <div>
+                <p>
+                    이번 주의 모델: <strong th:text="${metadata.champ.name}">챔피언</strong>
+                    (<span th:text="${metadata.champ.weightClass}">체급</span>)
+                </p>
+
+                <div>
+                    타격 정확도: <span th:text="${metadata.champ.strAcc} + '%'">0%</span>
+                    (평균 대비
+                    <span th:classappend="${metadata.strAccGap >= 0} ? 'up' : 'down'">
+                    <span th:text="${metadata.strAccGap >= 0 ? '+' : ''} + ${metadata.strAccGap} + '%'">0%</span>
+                </span>)
+                </div>
+
+                <div>
+                    Takedown Avg: <span th:text="${metadata.champ.tdAvg}">0</span>
+                    (평균 대비
+                    <span th:classappend="${metadata.tdGap >= 0} ? 'up' : 'down'">
+                    <span th:text="${metadata.tdGap >= 0 ? '+' : ''} + ${metadata.tdGap}">0</span>
+                </span>)
+                </div>
+            </div>
+        </div>
+
+        <p th:if="${metadata == null}">현재 분석 가능한 챔피언 데이터가 없습니다.</p>
+    </div>
+
+</section>
+
+<button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+<div id="side-memo" class="side-memo-window">
+    <div class="memo-header">
+        <h3>Quick Memo</h3>
+        <button type="button" id="closeMemoBtn">X</button>
+    </div>
+    <div class="memo-content">
+        <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+    </div>
+</div>
+
+<button type="button" id="goToTop" class="goToTop">▲</button>
+
+<footer th:replace="~{layout/footer::footer}"></footer>
+</body>
+
+</html>

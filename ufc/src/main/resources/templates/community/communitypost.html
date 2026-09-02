@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/communityPost.css}">
+    <link rel="stylesheet" th:href="@{/css/communitysidebar.css}">
+    <meta name="id" th:content="${id}">
+    <script defer th:src="@{/js/communitypost.js}"></script>
+</head>
+<body>
+<header th:replace="~{layout/header::header}"></header>
+<h2 class="community-page-title">게시글</h2>
+
+<main class="content4_community_post">
+    <div class="post-main-content">
+
+        <!-- SIDEBAR -->
+        <section class="sidebar-section">
+            <ul>
+                <li class="community-title">게시판</li>
+                <li><a th:href="@{/community}" class="sidebar-item">-전체 글 보기</a></li>
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-인기글</a></li>-->
+                <li><a th:href="@{/community(category=10000)}" class="sidebar-item">-자유 게시판</a></li>
+                <li><a th:href="@{/community(category=1000)}" class="sidebar-item">-페더급 게시판</a></li>
+                <li><a th:href="@{/community(category=2000)}" class="sidebar-item">-라이트급 게시판</a></li>
+                <li><a th:href="@{/community(category=3000)}" class="sidebar-item">-웰터급 게시판</a></li>
+                <li><a th:href="@{/community(category=4000)}" class="sidebar-item">-미들급 게시판</a></li>
+                <li><a th:href="@{/community(category=5000)}" class="sidebar-item">-라이트 헤비급 게시판</a></li>
+                <li><a th:href="@{/community(category=6000)}" class="sidebar-item">-헤비급 게시판</a></li>
+                <li><a th:href="@{/community(category=7000)}" class="sidebar-item">-유저투표 게시판</a></li>
+                <li><a th:href="@{/community(category=8000)}" class="sidebar-item">-공지</a></li>
+            </ul>
+
+<!--            <ul>-->
+<!--                <li class="sidebar-title">최근 방문 게시판</li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-헤비급 게시판</a></li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-라이트급 게시판</a></li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-미들급 게시판</a></li>-->
+<!--            </ul>-->
+        </section>
+
+        <!-- ARTICLE: POST -->
+        <article class="post-container">
+
+            <!-- POST HEADER -->
+            <section class="post-header">
+                <div class="header-row header-category">
+                        <span th:switch="${post.communityCategory}">
+                            <span th:case="10000">자유게시판</span>
+                            <span th:case="1000">페더급</span>
+                            <span th:case="2000">라이트급</span>
+                            <span th:case="3000">웰터급</span>
+                            <span th:case="4000">미들급</span>
+                            <span th:case="5000">라이트헤비급</span>
+                            <span th:case="6000">헤비급</span>
+                            <span th:case="7000">유저투표</span>
+                            <span th:case="8000">공지</span>
+                        </span> 게시판
+                </div>
+
+                <div class="header-title-info-container">
+                    <div class="header-row header-title" th:text="${post.communityTitle}">제목</div>
+                    <div class="header-info">
+                        <div th:if="${admin == 1}">
+                            <th:block th:if="${post.communityHidden == 1}">
+                                <form th:action="@{/community/unhidepost}" method="post" style="display:inline;" onsubmit="return confirm('게시글 숨김 처리를 취소(복구) 하시겠습니까?');">
+                                    <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                    <button class="info-admin-unhidepost" type="submit">게시글 숨김 취소</button>
+                                </form>
+                            </th:block>
+
+                            <th:block th:unless="${post.communityHidden == 1}">
+                                <form th:action="@{/community/hidepost}" method="post" style="display:inline;" onsubmit="return confirm('게시글을 숨김 처리(블라인드) 하시겠습니까?');">
+                                    <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                    <button class="info-admin-hidepost" type="submit">게시글 숨김</button>
+                                </form>
+                            </th:block>
+
+<!--                            <span style="padding: 0 5px;"> / </span>-->
+                            <form th:action="@{/community/deletepost}" method="post" style="display:inline;" onsubmit="return confirm('게시글을 영구 삭제(Hard Delete) 하시겠습니까?');">
+                                <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                <button class="info-admin-deletepost" type="submit"> 게시글 삭제</button>
+                            </form>
+                        </div>
+
+                        <span class="info-admin" th:if="${post.admin ==1}" th:text="'' + '🛡️' + ${post.id}">어드민</span>
+                        <span class="info-nickname" th:if="${post.admin != 1}" th:text="${post.id}">일반유저</span>
+
+                        <span class="info-date" th:text="${post.communityWriteTime}">작성 시간</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- POST BODY -->
+            <section class="post-body">
+                <div class="post-image-area" th:if="${post.communityImage != null and post.communityImage != ''}">
+                    <img th:src="@{'/communityimages/' + ${post.communityImage}}"
+                         alt="게시글 첨부 이미지"
+                         style="max-width: 100%; height: auto;">
+                </div>
+
+                <div class="post-content" th:text="${post.communityContent}">
+                    본문
+                </div>
+
+                <div class="vote-area-container">
+                    <div class="LikeButton">
+                        <button th:attr="voteLike=${post.communityContentNumber}"
+                                th:classappend="${vote == 1} ? 'vote-active-like' : ''"></button>
+                        <span th:text="${post.communityLike}">0</span>
+                        <span class="hidden-text" th:if="${vote == 1}">좋아요 취소</span>
+                        <span class="hidden-text" th:unless="${vote == 1}">좋아요</span>
+                    </div>
+
+                    <span class="vote-count-separator" th:text="${post.communityLike - post.communityDisLike}">0</span>
+
+                    <div class="DisLikeButton">
+                        <button th:attr="voteDisLike=${post.communityContentNumber}"
+                                th:classappend="${vote == -1} ? 'vote-active-dislike' : ''"></button>
+                        <span th:text="${post.communityDisLike}">0</span>
+                        <span class="hidden-text" th:if="${vote == -1}">싫어요 취소</span>
+                        <span class="hidden-text" th:unless="${vote == -1}">싫어요</span>
+                    </div>
+                </div>
+
+                <div class="edit-actions-container" th:if="${post.id == id}">
+                    <a class="action-btn-modify" th:href="@{/community/communitymodify(communityContentNumber=${post.communityContentNumber})}">
+                        수정
+                    </a>
+                    <form action="/community/communitydelete" onsubmit="return confirm('정말로 삭제하시겠습니까?');" method="post" style="display:inline;">
+                        <input type="hidden" th:value="${post.communityContentNumber}" name="communityContentNumber">
+                        <button class="action-btn-delete" type="submit">삭제</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- COMMENT SECTION -->
+            <section class="comment-section">
+                <div class="comment-write-area">
+                    <form action="/community/replysave" method="post">
+                        <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                        <input type="hidden" name="id" th:value="${id}">
+                        <textarea class="comment-input" name="replyContent" placeholder="의견을 공유해보세요"></textarea>
+                        <button type="submit" class="comment-submit-btn">등록</button>
+                    </form>
+                </div>
+
+                <div class="comment-list">
+                    <div class="comment-item" th:each="reply : ${reply}">
+                        <div class="comment-header">
+                            <div class="comment-info-group">
+<!--                                <span class="comment-nickname" th:text="${reply.id}">닉네임</span>-->
+
+                                <span class="comment-admin" th:if="${reply.admin ==1}" th:text="'' + '🛡️' + ${reply.id}">어드민</span>
+                                <span class="comment-nickname" th:if="${reply.admin != 1}" th:text="${reply.id}">일반유저</span>
+
+                                <span class="comment-data" th:text="${#temporals.format(reply.replyTime, 'yyyy.MM.dd HH:mm')}">작성시간</span>
+                                <input type="hidden" class="reply-number" th:value="${reply.replyNumber}">
+                                <button class="reply-reply" th:if="${reply.parentReplyNumber==null}">답글</button>
+                            </div>
+
+                            <div class="reply-section">
+                                <th:block th:if="${id == reply.id and reply.replyHidden != 1}">
+                                    <button class="reply-modify">수정</button>
+                                    <form action="/community/replydelete" method="post" onsubmit="return confirm('댓글을 삭제하시겠습니까?');" style="display:inline;">
+                                        <input type="hidden" name="replyNumber" th:value="${reply.replyNumber}">
+                                        <input type="hidden" name="communityContentNumber" th:value="${reply.communityContentNumber}">
+                                        <button class="reply-delete" type="submit">삭제</button>
+                                    </form>
+                                </th:block>
+
+                                <th:block th:if="${admin == 1}">
+<!--                                    <span style="padding: 0 5px;"> / </span>-->
+
+                                    <th:block th:if="${reply.replyHidden == 1}">
+                                        <form th:action="@{/community/unhidereply}" method="post" style="display:inline;" onsubmit="return confirm('이 댓글의 숨김 처리를 취소(복구) 하시겠습니까?');">
+                                            <input type="hidden" name="replyNumber" th:value="${reply.replyNumber}">
+                                            <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                            <button class="info-admin-unhide-reply" type="submit" style="color: blue; border: none; background: none; cursor: pointer;">[숨김 취소]</button>
+                                        </form>
+                                    </th:block>
+
+                                    <th:block th:if="${reply.replyHidden == 0}">
+                                        <form th:action="@{/community/hidereply}" method="post" style="display:inline;" onsubmit="return confirm('이 댓글을 숨김 처리(블라인드) 하시겠습니까?');">
+                                            <input type="hidden" name="replyNumber" th:value="${reply.replyNumber}">
+                                            <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                            <button class="info-admin-hide-reply" type="submit" style="color: red; border: none; background: none; cursor: pointer;">[숨김]</button>
+                                        </form>
+                                    </th:block>
+
+<!--                                    <span style="padding: 0 5px;"> / </span>-->
+                                    <form th:action="@{/community/deletereply}" method="post" style="display:inline;" onsubmit="return confirm('이 댓글을 영구 삭제(Hard Delete) 하시겠습니까? 복구 불가능합니다.');">
+                                        <input type="hidden" name="replyNumber" th:value="${reply.replyNumber}">
+                                        <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                        <button class="info-admin-delete-reply" type="submit" style="color: darkred; border: none; background: none; cursor: pointer;">[영구 삭제]</button>
+                                    </form>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div class="comment-content">
+                            <th:block th:if="${reply.replyHidden == 1 and admin != 1}">
+                                <span style="color: #999; font-style: italic;">관리자에 의해 숨김 처리된 댓글입니다.</span>
+                            </th:block>
+
+                            <th:block th:unless="${reply.replyHidden == 1 and admin != 1}">
+                                <span th:text="${reply.replyContent}">댓글 내용</span>
+                            </th:block>
+                        </div>
+
+                        <!-- 댓글 수정 영역 (초기 hidden) -->
+                        <div class="reply-modify-area" th:if="${id == reply.id}" style="display:none;">
+                            <form>
+                                <textarea class="reply-modify-input comment-input" th:text="${reply.replyContent}" placeholder="댓글을 수정하세요"></textarea>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+                                    <button type="button" class="reply-modify-cancel comment-submit-btn" style="background-color: #555; color: white; width: 60px; font-size: 13px;">취소</button>
+                                    <button type="button" class="reply-modify-save comment-submit-btn" style="width: 60px; font-size: 13px; margin-left: 5px;">수정</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- 댓글 좋아요/싫어요 -->
+                        <div class="reply-actions-group">
+                            <button class="reply-like" th:attr="data-action='like', data-reply=${reply.replyNumber}" th:classappend="${reply.replyStatus == 1} ? 'reply-active-like' : ''">좋아요</button>
+                            <span class="vote-count-separator" th:text="${reply.replyLike - reply.replyDisLike}">0</span>
+                            <button class="reply-dislike" th:attr="data-action='dislike', data-reply=${reply.replyNumber}" th:classappend="${reply.replyStatus == -1} ? 'reply-active-dislike' : ''">싫어요</button>
+                        </div>
+
+                        <!-- 답글 입력 영역 (초기 hidden) -->
+                        <div class="reply-reply-area" style="display:none;">
+                            <form action="/community/replyreplysave" method="post">
+                                <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                <input type="hidden" name="id" th:value="${id}">
+                                <input type="hidden" name="parentReplyNumber" th:value="${reply.replyNumber}">
+                                <textarea class="comment-input" name="replyContent" placeholder="답글을 입력하세요"></textarea>
+                                <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+                                    <button type="button" class="reply-reply-cancel comment-submit-btn" style="background-color: #555; color: white; width: 60px; font-size: 13px;">취소</button>
+                                    <button type="submit" class="comment-submit-btn" style="width: 60px; font-size: 13px; margin-left: 5px;">등록</button>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- 답글(자식) 루프 -->
+                        <div class="sub-reply-item" th:each="subreply : ${reply.children}">
+                            <div class="comment-header">
+                                <div class="comment-info-group">
+<!--                                    <span class="comment-nickname" th:text="${subreply.id}">답글 작성자</span> th:text="'' + '🛡️' + ${reply.id}" -->
+
+                                    <span class="comment-admin" th:if="${subreply.admin == 1}" th:text="'' + '🛡️' + ${subreply.id}">답글 어드민</span>
+                                    <span class="comment-nickname" th:if="${subreply.admin != 1}" th:text="${subreply.id}">답글 작성자</span>
+
+                                    <span class="comment-data" th:text="${#temporals.format(subreply.replyTime, 'yyyy.MM.dd HH:mm')}">작성 시간</span>
+                                    <input type="hidden" class="reply-number" th:value="${subreply.replyNumber}">
+                                </div>
+
+                                <div class="reply-reply-section">
+                                    <th:block th:if="${id == subreply.id and subreply.replyHidden != 1}">
+                                        <button class="reply-modify">수정</button>
+                                        <form action="/community/replydelete" method="post" onsubmit="return confirm('답글을 삭제하시겠습니까?');" style="display:inline;">
+                                            <input type="hidden" name="replyNumber" th:value="${subreply.replyNumber}">
+                                            <input type="hidden" name="communityContentNumber" th:value="${subreply.communityContentNumber}">
+                                            <button class="reply-delete" type="submit">삭제</button>
+                                        </form>
+                                    </th:block>
+
+                                    <div class="admin-reply-actions-group" th:if="${admin == 1}">
+<!--                                        <span style="padding: 0 5px;"> / </span>-->
+                                        <th:block th:if="${subreply.replyHidden == 1}">
+                                            <form th:action="@{/community/unhidereply}" method="post" style="display:inline;" onsubmit="return confirm('이 답글의 숨김 처리를 취소(복구) 하시겠습니까?');">
+                                                <input type="hidden" name="replyNumber" th:value="${subreply.replyNumber}">
+                                                <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                                <button class="info-admin-unhide-reply" type="submit" style="color: blue; border: none; background: none; cursor: pointer;">[숨김 취소]</button>
+                                            </form>
+                                        </th:block>
+
+                                        <th:block th:if="${subreply.replyHidden == 0}">
+                                            <form th:action="@{/community/hidereply}" method="post" style="display:inline;" onsubmit="return confirm('이 답글을 숨김 처리(블라인드) 하시겠습니까?');">
+                                                <input type="hidden" name="replyNumber" th:value="${subreply.replyNumber}">
+                                                <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                                <button class="info-admin-hide-reply" type="submit" style="color: red; border: none; background: none; cursor: pointer;">[숨김]</button>
+                                            </form>
+                                        </th:block>
+
+<!--                                        <span style="padding: 0 5px;"> / </span>-->
+                                        <form th:action="@{/community/deletereply}" method="post" style="display:inline;" onsubmit="return confirm('이 답글을 영구 삭제(Hard Delete) 하시겠습니까? 복구 불가능합니다.');">
+                                            <input type="hidden" name="replyNumber" th:value="${subreply.replyNumber}">
+                                            <input type="hidden" name="communityContentNumber" th:value="${post.communityContentNumber}">
+                                            <button class="info-admin-delete-reply" type="submit" style="color: darkred; border: none; background: none; cursor: pointer;">[영구 삭제]</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="comment-content">
+                                <th:block th:if="${subreply.replyHidden == 1 and admin != 1}">
+                                    <span style="color: #999; font-style: italic;">관리자에 의해 숨김 처리된 답글입니다.</span>
+                                </th:block>
+                                <th:block th:unless="${subreply.replyHidden == 1 and admin != 1}">
+                                    <span th:text="${subreply.replyContent}">답글 내용</span>
+                                </th:block>
+                            </div>
+
+                            <div class="reply-modify-area" th:if="${id == subreply.id}" style="display:none;">
+                                <form>
+                                    <textarea class="reply-modify-input comment-input" th:text="${subreply.replyContent}" placeholder="답글을 수정하세요"></textarea>
+                                    <div style="display: flex; justify-content: flex-end; margin-top: 5px;">
+                                        <button type="button" class="reply-modify-cancel comment-submit-btn" style="background-color: #555; color: white; width: 60px; font-size: 13px;">취소</button>
+                                        <button type="button" class="reply-modify-save comment-submit-btn" style="width: 60px; font-size: 13px; margin-left: 5px;">수정</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="reply-actions-group">
+                                <button class="reply-like" th:attr="data-action='like', data-reply=${subreply.replyNumber}" th:classappend="${subreply.replyStatus == 1} ? 'reply-active-like' : ''">좋아요</button>
+                                <span class="vote-count-separator" th:text="${subreply.replyLike - subreply.replyDisLike}">0</span>
+                                <button class="reply-dislike" th:attr="data-action='dislike', data-reply=${subreply.replyNumber}" th:classappend="${subreply.replyStatus == -1} ? 'reply-active-dislike' : ''">싫어요</button>
+                            </div>
+                        </div> <!-- // sub-reply-item -->
+                    </div> <!-- // comment-item -->
+                </div> <!-- // comment-list -->
+            </section> <!-- // comment-section -->
+
+        </article> <!-- // post-container -->
+
+    </div> <!-- // post-main-content -->
+</main>
+
+<footer th:replace="~{layout/footer::footer}"></footer>
+
+<!--<script>-->
+<!--    const id = document.querySelector('meta[name="id"]') ? document.querySelector('meta[name="id"]').getAttribute('content') : '';-->
+
+<!--    document.addEventListener('DOMContentLoaded', () => {-->
+<!--        // 게시글 좋아요-->
+<!--        document.querySelectorAll('.LikeButton button').forEach(button => {-->
+<!--            button.addEventListener('click', async (e) => {-->
+<!--                const postId = e.target.getAttribute('voteLike');-->
+<!--                if (!postId) return;-->
+<!--                const response = await fetch('/community/like?communityContentNumber=' + postId + '&id=' + id, { method: 'POST' });-->
+<!--                if (response.ok) location.reload();-->
+<!--            });-->
+<!--        });-->
+
+<!--        // 게시글 싫어요-->
+<!--        document.querySelectorAll('.DisLikeButton button').forEach(button => {-->
+<!--            button.addEventListener('click', async (e) => {-->
+<!--                const postId = e.target.getAttribute('voteDisLike');-->
+<!--                if (!postId) return;-->
+<!--                const response = await fetch('/community/dislike?communityContentNumber=' + postId + '&id=' + id, { method: 'POST' });-->
+<!--                if (response.ok) location.reload();-->
+<!--            });-->
+<!--        });-->
+
+<!--        // 댓글/답글 수정 토글 & 수정 저장/취소-->
+<!--        document.querySelectorAll('.comment-item, .sub-reply-item').forEach(commentItem => {-->
+<!--            const modifyBtn = commentItem.querySelector('.reply-modify');-->
+<!--            const modifyArea = commentItem.querySelector('.reply-modify-area');-->
+<!--            const replyContentDiv = commentItem.querySelector('.comment-content');-->
+
+<!--            if (modifyArea) {-->
+<!--                const modifyInput = modifyArea.querySelector('.reply-modify-input');-->
+<!--                const modifySave = modifyArea.querySelector('.reply-modify-save');-->
+<!--                const modifyCancel = modifyArea.querySelector('.reply-modify-cancel');-->
+<!--                const replyNumberInput = commentItem.querySelector('.reply-number');-->
+<!--                const replyNumber = replyNumberInput ? replyNumberInput.value : null;-->
+
+<!--                if (modifyBtn) {-->
+<!--                    modifyBtn.addEventListener('click', () => {-->
+<!--                        modifyInput.value = replyContentDiv ? replyContentDiv.textContent.trim() : '';-->
+<!--                        modifyArea.style.display = 'block';-->
+<!--                        if (replyContentDiv) replyContentDiv.style.display = 'none';-->
+<!--                        modifyBtn.style.display = 'none';-->
+<!--                    });-->
+<!--                }-->
+
+<!--                if (modifyCancel) {-->
+<!--                    modifyCancel.addEventListener('click', () => {-->
+<!--                        modifyArea.style.display = 'none';-->
+<!--                        if (replyContentDiv) replyContentDiv.style.display = 'block';-->
+<!--                        if (modifyBtn) modifyBtn.style.display = 'inline-block';-->
+<!--                    });-->
+<!--                }-->
+
+<!--                if (modifySave) {-->
+<!--                    modifySave.addEventListener('click', async () => {-->
+<!--                        const modifyContent = modifyInput.value;-->
+<!--                        try {-->
+<!--                            const formData = new URLSearchParams();-->
+<!--                            formData.append('replyNumber', replyNumber);-->
+<!--                            formData.append('replyContent', modifyContent);-->
+
+<!--                            const response = await fetch('/community/replymodify', {-->
+<!--                                method: 'POST',-->
+<!--                                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },-->
+<!--                                body: formData.toString()-->
+<!--                            });-->
+
+<!--                            if (response.ok) {-->
+<!--                                if (replyContentDiv) replyContentDiv.textContent = modifyContent;-->
+<!--                                if (replyContentDiv) replyContentDiv.style.display = 'block';-->
+<!--                                modifyArea.style.display = 'none';-->
+<!--                                if (modifyBtn) modifyBtn.style.display = 'inline-block';-->
+<!--                            } else {-->
+<!--                                alert('댓글 수정 실패');-->
+<!--                            }-->
+<!--                        } catch (err) {-->
+<!--                            console.error(err);-->
+<!--                            alert('서버 오류 발생');-->
+<!--                        }-->
+<!--                    });-->
+<!--                }-->
+<!--            }-->
+<!--        });-->
+
+<!--        // 답글 버튼 토글(입력 영역 표시)-->
+<!--        document.querySelectorAll('.reply-reply').forEach(btn => {-->
+<!--            btn.addEventListener('click', e => {-->
+<!--                const commentItem = e.target.closest('.comment-item');-->
+<!--                const targetArea = commentItem ? commentItem.querySelector('.reply-reply-area') : null;-->
+<!--                if (targetArea) targetArea.style.display = 'block';-->
+<!--            });-->
+<!--        });-->
+
+<!--        document.querySelectorAll('.reply-reply-cancel').forEach(btn => {-->
+<!--            btn.addEventListener('click', e => {-->
+<!--                const area = e.target.closest('.reply-reply-area');-->
+<!--                if (area) area.style.display = 'none';-->
+<!--            });-->
+<!--        });-->
+
+<!--        // 댓글 좋아요/싫어요-->
+<!--        document.querySelectorAll('.reply-actions-group button').forEach(button => {-->
+<!--            button.addEventListener('click', async (e) => {-->
+<!--                const action = e.target.getAttribute('data-action');-->
+<!--                const replyNumber = e.target.getAttribute('data-reply');-->
+<!--                if (!action || !replyNumber) return;-->
+
+<!--                let url = '';-->
+<!--                if (action === 'like') url = '/community/replylike';-->
+<!--                else if (action === 'dislike') url = '/community/replydislike';-->
+<!--                else return;-->
+
+<!--                const response = await fetch(`${url}?replyNumber=${replyNumber}&id=${id}`, { method: 'POST' });-->
+<!--                if (response.ok) location.reload();-->
+<!--                else alert('투표 실패');-->
+<!--            });-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
+<button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+<div id="side-memo" class="side-memo-window">
+    <div class="memo-header">
+        <h3>Quick Memo</h3>
+        <button type="button" id="closeMemoBtn">X</button>
+    </div>
+    <div class="memo-content">
+        <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+    </div>
+</div>
+
+</body>
+</html>

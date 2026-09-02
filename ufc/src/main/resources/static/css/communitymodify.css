@@ -1,0 +1,311 @@
+:root {
+    --color-sidebar-bg: #1a1a1a;
+    --color-active-bg: #333333;
+    --color-accent: #fca311;
+    --color-text-primary: white;
+    --color-text-secondary: #ccc;
+    --color-border: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    background-color: #000000;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+/* 0. 기본 타이틀 */
+.community-write-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-text-primary);
+    margin-bottom: 16px;
+    padding-left: 1.5rem; /* main-content-wrapper와 같은 좌우 여백 적용 */
+    padding-right: 1.5rem;
+}
+
+.community-title {
+     color: var(--color-text-secondary);
+     font-size: 15px;
+     padding: 10px 20px;
+     font-weight: bold;
+ }
+
+.main-content-wrapper {
+    margin-top: 1rem; /* 헤더 아래 간격 */
+    padding-left: 1.5rem; /* 좌우 24px 여백 */
+    padding-right: 1.5rem;
+    padding-bottom: 20px;
+}
+
+/* 1. 메인 영역 (사이드바와 게시판을 좌우로 배치) */
+.content4_community_write {
+    display: flex;
+    gap: 1rem; /* 16px (사이드바와 게시판 사이의 간격) */
+}
+
+.sidebar-section {
+    width: 250px; /* 고정된 너비 */
+    flex-shrink: 0;
+    background-color: var(--color-sidebar-bg);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-self: flex-start;
+}
+
+.sidebar-section ul {
+    list-style: none; /* 리스트 마커(점) 제거 */
+    padding: 0;      /* 브라우저 기본 왼쪽 패딩 초기화 */
+    margin: 0;       /* 기본 상하 마진 초기화 */
+}
+
+.sidebar-title {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.sidebar-item {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    padding: 8px 30px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    text-decoration: none;
+}
+.sidebar-item:hover {
+    background-color: #2c2c2c;
+}
+.sidebar-item-active {
+    background-color: var(--color-active-bg);
+    color: var(--color-text-primary);
+}
+
+/* 2. 본문 작성 섹션 */
+.write-section {
+    flex-grow: 1; /* 남은 공간을 모두 차지 */
+    min-width: 0;
+    background-color: #000000; /* 배경색 */
+}
+
+.community-write-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* 각 입력 그룹 간 간격 */
+}
+/*
+.write-title,
+.write-category,
+.write-file {
+    display: flex;
+    align-items: center;
+}
+ */
+.write-category {
+    flex-shrink: 0;
+    width: 180px;
+}
+
+.write-title {
+    flex-grow: 1;
+    width: auto;
+}
+
+.write-content {
+    display: flex;
+    flex-direction: column; /* 라벨을 위에, 내용을 아래에 배치 */
+    align-items: flex-start;
+    gap: 10px;
+}
+
+/* --- 라벨 스타일 --- */
+.write-category-label,
+.write-title-label,
+.write-file-label {
+    font-size: 15px;
+    font-weight: bold;
+    color: var(--color-text-primary);
+    flex-shrink: 0;
+}
+
+/* --- 입력 필드 공통 스타일 --- */
+.write-category-select,
+.write-title-input,
+.write-content-input,
+.write-file-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #444;
+    background-color: #000;
+    color: var(--color-text-primary);
+    font-size: 15px;
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.write-title-input{
+    width: 100%;
+    flex-grow: 1;
+}
+
+.write-category-select:focus,
+.write-title-input:focus,
+.write-content-input:focus {
+    border-color: var(--color-accent);
+}
+
+/* 카테고리 셀렉트 박스 너비 조정 */
+.write-category-select {
+    width: 100%;
+    flex-grow: 0;
+}
+
+/* 내용 입력창 스타일 */
+.write-content-input {
+    width: 100%;
+    resize: vertical; /* 수직 크기 조절 허용 */
+}
+
+.write-file-input {
+    flex-grow: 1;
+    cursor: pointer;
+    max-width: 400px;
+}
+
+.write-header-index1 {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 100%; /* 부모(form) 너비를 꽉 채우도록 */
+}
+
+/* --- 버튼 영역 스타일 --- */
+.write-button-row {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽 끝으로 정렬 */
+    gap: 10px; /* 버튼 사이 간격 */
+    padding-top: 15px;
+}
+
+/* 글쓰기, 취소 버튼 */
+.board-write-btn {
+    /* position: fixed; 제거. 이제 일반적인 문서 흐름을 따릅니다. */
+
+    background-color: var(--color-accent); /* 오렌지색 배경 */
+    color: #000;                     /* 검정색 텍스트 */
+    font-weight: bold;
+    font-size: 16px;
+
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px; /* 둥근 모서리 */
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* 그림자 약하게 */
+    transition: background-color 0.2s, transform 0.1s;
+
+    /* z-index는 이제 필요 없지만, 혹시 모를 상황에 대비해 낮춥니다. */
+    z-index: 100;
+}
+
+.board-write-btn:hover {
+    background-color: #ffb74d;
+    transform: translateY(-1px);
+}
+
+.board-write-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* side-memo */
+.memo-open-btn {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 100px;
+    background-color: #ff9900;
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    writing-mode: vertical-lr;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+}
+
+.side-memo-window {
+    position: fixed;
+    right: -320px; /* 창 너비보다 더 밀어내기 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-memo-window.active {
+    right: 0;
+}
+
+.memo-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memo-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.memo-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검정 배경에 투명도 0.5 적용 */ /* color: #000000; opacity : 0.5; */
+}
+
+.memo-content textarea {
+    width: 100%;
+    height: 330px; /* 헤더 높이 제외한 적당한 높이 */
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    resize: none;
+
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+
+    /* 공책 줄무늬 디자인 (linear-gradient 사용) */
+    background: transparent; /* 배경은 부모의 rgba(0,0,0,0.5)를 따라감 */
+    background-image: linear-gradient(#555 1px, transparent 1px); /* 줄 색상 (#555) */
+    background-size: 100% 30px; /* 줄 간격 30px (line-height와 일치시켜야 함) */
+    background-attachment: local; /* 스크롤 시 줄무늬도 같이 이동 */
+}
+
+/* 스크롤바 디자인 */
+.memo-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+.memo-content textarea::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}

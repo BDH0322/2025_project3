@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>UFC.GG - 투표 작성</title>
+    <link rel="stylesheet" th:href="@{/css/predictAI.css}">
+    <link rel="stylesheet" th:href="@{/css/voteWrite.css}">
+</head>
+<body>
+<div class="container">
+    <header class="form-header">
+        <h1>🗳️ 운영자 투표 생성</h1>
+        <p>대회 넘버링과 체급을 선택하여 투표 게시글을 작성하세요.</p>
+    </header>
+
+    <section class="write-box">
+        <form id="voteWriteForm" enctype="multipart/form-data">
+            <div class="input-section">
+                <div class="input-group half">
+                    <label for="fightNum">UFC 대회 번호</label>
+                    <input type="number" id="fightNum" name="fightNum" placeholder="예: 310" required>
+                </div>
+                <div class="input-group full">
+                    <label for="rawTitle">게시글 제목</label>
+                    <input type="text" id="rawTitle" name="title" placeholder="예: 시릴 간 vs 아스피날 승자 예측 투표!!" required>
+                </div>
+            </div>
+
+            <div class="input-group file-upload-group">
+                <label for="voteImage">대표 이미지 첨부</label>
+                <div class="file-custom-area">
+                    <input type="file" id="voteImage" name="voteImage" accept="image/*" onchange="previewImage(this)">
+                    <p class="file-hint">이미지 파일을 선택하거나 드래그하세요. (jpg, png, webp)</p>
+                </div>
+                <div id="imagePreviewContainer" style="display: none;">
+                    <img id="imagePreview" src="" alt="미리보기">
+                    <button type="button" class="btn-remove-img" onclick="removeImage()">삭제</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="content">상세 내용 분석</label>
+                <textarea id="content" name="content" rows="8" placeholder="경기에 대한 상세 분석 내용을 입력하세요."></textarea>
+            </div>
+
+            <hr class="divider">
+
+            <div class="vote-setup-container">
+                <h3>📊 투표 대상 설정</h3>
+
+                <div class="input-group">
+                    <label>체급 선택</label>
+                    <select id="weightClass" name="weightClass" required>
+                        <option value="" disabled selected>--- 체급 선택 ---</option>
+                        <option value="Featherweight">Featherweight (페더급)</option>
+                        <option value="Lightweight">Lightweight (라이트급)</option>
+                        <option value="Welterweight">Welterweight (웰터급)</option>
+                        <option value="Middleweight">Middleweight (미들급)</option>
+                        <option value="Light Heavyweight">Light Heavyweight (라이트헤비급)</option>
+                        <option value="Heavyweight">Heavyweight (헤비급)</option>
+                    </select>
+                </div>
+
+                <div class="fighter-select-wrapper">
+                    <div class="fighter-box blue">
+                        <span class="label">FIGHTER 1 (BLUE)</span>
+                        <select id="fighter1" name="fighter1Name" disabled required>
+                            <option value="">체급을 먼저 선택하세요</option>
+                        </select>
+                    </div>
+
+                    <div class="vs-circle">VS</div>
+
+                    <div class="fighter-box red">
+                        <span class="label">FIGHTER 2 (RED)</span>
+                        <select id="fighter2" name="fighter2Name" disabled required>
+                            <option value="">체급을 먼저 선택하세요</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn-cancel" onclick="location.href='/vote/vlist'">취소</button>
+                <button type="button" class="btn-submit" onclick="submitVoteForm()">게시글 등록</button>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script th:src="@{/js/vote_write.js}">
+    function previewImage(input){
+        const container = document.getElementById('imagePreviewContainer');
+        const preview = document.getElementById('imagePreview');
+
+        if(input.files && input.files[0]){
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+                container.style.display = 'block';
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    function removeImage(){
+        const input = document.getElementById('voteImage');
+        const container = document.getElementById('imagePreviewContainer');
+        input.value = "";
+        container.style.display = 'none';
+
+    }
+
+</script>
+</body>
+</html>

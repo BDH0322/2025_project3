@@ -1,0 +1,130 @@
+/* 기본 배경 설정 (전체 페이지) */
+body {
+    background-color: #0f0f0f !important;
+    margin: 0;
+    color: #fff;
+}
+
+.main-container {
+    background-color: #0f0f0f;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+}
+
+.mainunder-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 게시판 상단 */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.btn-write {
+    background-color: #d20a0a;
+    color: #fff !important;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 게시판 리스트 본체 */
+.board-list {
+    background: #1a1a1a;
+    border-radius: 8px;
+    width: 100%;
+    overflow: hidden;
+}
+
+.board-row {
+    display: flex;
+    padding: 15px;
+    border-bottom: 1px solid #333;
+    align-items: center;
+    text-align: center;
+}
+
+.board-row.header {
+    background: #222;
+    color: #f7a01d;
+    font-weight: bold;
+}
+
+/* 컬럼 너비 (flex 사용) */
+.col-num { width: 10%; }
+.col-title { width: 50%; text-align: left; padding-left: 15px; }
+.col-weight { width: 15%; }
+.col-status { width: 15%; }
+.col-date { width: 10%; }
+
+/* 페이징 */
+.pagination {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    gap: 10px;
+}
+
+.pagination a {
+    color: #f7a01d;
+    text-decoration: none;
+    padding: 5px 12px;
+    border: 1px solid #333;
+}
+
+.pagination .active a {
+    background: #f7a01d;
+    color: #000;
+}
+
+.search-wrapper{
+    margin-top: 20px; /*페이징 버튼과의 간격*/
+    margin-bottom: 20px; /*하단 푸터와의 여유공간*/
+    display: flex;
+    /*justify-content: flex-end;*/
+    justify-content: center;
+    align-items:center;
+}
+.search-form{
+    display:flex;
+    gap: 5px;
+}
+
+.input-search{
+    width: 280px;
+    padding: 10px 15px;
+    background-color: #1a1a1a;
+    border: 1px solid #444;
+    color: #fff;
+    border-radius: 4px 0 0 4px;/*왼쪽 모서리만 둥글레*/
+    outline: none;
+}
+
+.btn-search{
+   padding: 10px 20px;
+   background-color: #f7a01d; /* UFC 컨셉의 오렌지/옐로우 계열 */
+   color: #000;
+   border: none;
+   font-weight: bold;
+   border-radius: 0 4px 4px 0; /* 오른쪽 모서리만 둥글게 */
+   cursor: pointer;
+   transition: background 0.2s;
+}
+.btn-search:hover{
+    background-color:#ffb84d;
+}

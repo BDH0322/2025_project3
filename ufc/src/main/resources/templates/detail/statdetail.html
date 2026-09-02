@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${fighter.name} + ' STAT'"></title>
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/statdetail.css}">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+<header th:replace="~{layout/header::header}"></header>
+
+<script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        const MAX_STAT_SLPM_TDA = 10.0;
+        const MAX_STAT_PERCENT = 100.0;
+        const MIN_VISUAL_RADIUS = 5;
+
+        /**
+         * 4축 다이아몬드 차트 그리기 함수
+         */
+        function drawDiamondChart(chartElement, statMap, statMaxes, inverseKeys, angles_deg = [-90, 0, 90, 180]) {
+            const dataPolygon = chartElement.querySelector('.data-polygon');
+
+            const centerX = 50;
+            const centerY = 50;
+            const radius = 40;
+
+            const statKeys = Object.keys(statMap);
+            let dataPoints = [];
+
+            statKeys.forEach((key, index) => {
+                let statValue = statMap[key];
+                let maxValue = statMaxes[key];
+
+                if (inverseKeys.includes(key)) {
+                    statValue = Math.max(0, maxValue - statValue);
+                }
+
+                const statRatio = (maxValue > 0) ? (Math.min(maxValue, statValue) / maxValue) : 0;
+
+                let currentRadius = radius * statRatio;
+                currentRadius = Math.max(currentRadius, MIN_VISUAL_RADIUS);
+
+                const angle_deg = angles_deg[index];
+                const angle_rad = Math.PI / 180 * angle_deg;
+
+                const x = centerX + currentRadius * Math.sin(angle_rad);
+                const y = centerY - currentRadius * Math.cos(angle_rad);
+                dataPoints.push(`${x},${y}`);
+            });
+
+            dataPolygon.setAttribute('points', dataPoints.join(' '));
+        }
+
+        // --- 1. 타격 차트 초기화 (Striking Chart) ---
+        const strikingChart = document.getElementById('strikingChart');
+        if (strikingChart) {
+            const strikingStats = {
+                strdef: parseFloat(strikingChart.dataset.strdef || 0),
+                slpm: parseFloat(strikingChart.dataset.slpm || 0),
+                stracc: parseFloat(strikingChart.dataset.stracc || 0),
+                sapm: parseFloat(strikingChart.dataset.sapm || 0)
+            };
+            const strikingMaxes = {
+                strdef: MAX_STAT_PERCENT,
+                slpm: MAX_STAT_SLPM_TDA,
+                stracc: MAX_STAT_PERCENT,
+                sapm: MAX_STAT_SLPM_TDA
+            };
+            drawDiamondChart(strikingChart, strikingStats, strikingMaxes, ['sapm']);
+        }
+
+       const grapplingChart = document.getElementById('grapplingChart');
+        if (grapplingChart) {
+            const grapplingStats = {
+                tddef: parseFloat(grapplingChart.dataset.tddef || 0),
+                tdavg: parseFloat(grapplingChart.dataset.tdavg || 0),
+                // 🚨 수정된 부분: gravingChart -> grapplingChart
+                tdacc: parseFloat(grapplingChart.dataset.tdacc || 0),
+                subavg: parseFloat(grapplingChart.dataset.subavg || 0)
+            };
+            const grapplingMaxes = {
+                tddef: MAX_STAT_PERCENT,
+                tdavg: 4.0,
+                tdacc: MAX_STAT_PERCENT,
+                subavg: 2.0
+            };
+            drawDiamondChart(grapplingChart, grapplingStats, grapplingMaxes, []);
+        }
+    });
+</script>
+<main class="content-wrapper">
+
+    <div class="fighter-profile-card">
+        <div class="profile-left">
+            <img th:src="${fighter.imageUrl}" th:alt="${fighter.name} + ' 프로필 사진'" class="profile-photo">
+            <div class="fighter-info-main">
+                <h1 class="fighter-name-display" th:text="${fighter.name}">파이터 이름</h1>
+            </div>
+        </div>
+
+        <div class="profile-right">
+
+            <div class="info-item">
+                <span class="info-label"><i class="far fa-clock icon"></i> 평균 경기시간:</span>
+                <span class="info-text" th:text="${#numbers.formatInteger(fighter.avgTime / 60, 1)} + '분 ' + ${#numbers.formatInteger(fighter.avgTime % 60, 2)} + '초'">0분 00초</span>
+            </div>
+
+            <div class="info-item">
+                <span class="info-label">전적:</span>
+                <span class="record-display" th:text="${fighter.totalWins} + ' 승 ' + ${fighter.totalLosses} + ' 패'">0 승 0 패</span> </div>
+            <div class="info-item">
+                <span class="info-label">랭킹:</span>
+                <span class="rank-display" th:text="${fighter.rankNum}">N/A</span> </div>
+            <div class="info-item">
+                <span class="info-label">체급:</span>
+                <span class="weight-class-display" th:text="${fighter.weightClass}">미정</span> </div>
+
+
+            <div class="info-item" th:if="${fighter.dob != null}">
+                <span class="info-label">나이:</span>
+                <span class="info-text">
+                    <th:block th:with="now=${T(java.time.LocalDate).now()},
+                          age=${T(java.time.temporal.ChronoUnit).YEARS.between(fighter.dob, now)}">
+                        <th:block th:text="${age}"></th:block>
+                            세
+                        </th:block>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="stat-container">
+        <h2 class="section-title">파이터 스탯 분석</h2>
+
+        <div class="stat-grid-wrapper">
+
+            <div class="diamond-chart-area striking-chart">
+                <h3 class="chart-title">타격 (Striking) 스탯</h3>
+                <div class="diamond-chart" id="strikingChart"
+                     th:data-slpm="${fighter.slpm}"
+                     th:data-stracc="${fighter.strAcc}"
+                     th:data-strdef="${fighter.strDef}"
+                     th:data-sapm="${fighter.sapm}">
+
+                    <svg class="radar-svg" viewBox="0 0 100 100">
+                        <polygon class="radar-bg" points="50,10 90,50 50,90 10,50"></polygon>
+                        <polygon class="data-polygon" points=""></polygon>
+                    </svg>
+
+                    <div class="chart-label top-label">SLpM (분당유효타)</div>
+                    <div class="chart-label right-label">타격 정확도 (%)</div>
+                    <div class="chart-label bottom-label">SApM (분당피격수)</div>
+                    <div class="chart-label left-label">타격 방어율 (%)</div>
+                </div>
+            </div>
+
+            <div class="diamond-chart-area grappling-chart">
+                <h3 class="chart-title">서브미션 (Grappling) 스탯</h3>
+                <div class="diamond-chart" id="grapplingChart"
+                     th:data-tdavg="${fighter.tdAvg}"
+                     th:data-tdacc="${fighter.tdAcc}"
+                     th:data-tddef="${fighter.tdDef}"
+                     th:data-subavg="${fighter.subAvg}">
+
+                    <svg class="radar-svg" viewBox="0 0 100 100">
+                        <polygon class="radar-bg" points="50,10 90,50 50,90 10,50"></polygon>
+                        <polygon class="data-polygon" points=""></polygon>
+                    </svg>
+
+                    <div class="chart-label top-label">TD 평균</div>
+                    <div class="chart-label right-label">TD 성공률 (%)</div>
+                    <div class="chart-label bottom-label">서브미션 평균</div>
+                    <div class="chart-label left-label">TD 방어율 (%)</div>
+
+                </div>
+            </div>
+
+            <div class="global-stats-area">
+                <h3 class="global-stat-title">글로벌 평균 대비 비교</h3>
+
+                <div class="comparison-list">
+
+                    <div th:with="stat=${fighter.slpm ?: 0.0}, max_val=10.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">SLpM (분당 유효타)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 1)}">0.0</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.strAcc ?: 0.0}, max_val=100.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">타격 정확도 (%)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 0) + '%'}">0%</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.strDef ?: 0.0}, max_val=100.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">타격 방어율 (%)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 0) + '%'}">0%</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.sapm ?: 0.0}, max_val=10.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">SApM (분당 피격수)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 1)}">0.0</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.tdAvg ?: 0.0}, max_val=4.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">TD 평균</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 1)}">0.0</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.tdAcc ?: 0.0}, max_val=100.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">TD 성공률 (%)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 0) + '%'}">0%</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.tdDef ?: 0.0}, max_val=100.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">TD 방어율 (%)</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 0) + '%'}">0%</span>
+                        </div>
+                    </div>
+
+                    <div th:with="stat=${fighter.subAvg ?: 0.0}, max_val=2.0, bar_width=${(stat / max_val) * 100}" class="comparison-item">
+                        <span class="stat-name">서브미션 평균</span>
+                        <div class="stat-bar-container">
+                            <div class="stat-bar" th:style="'width:' + ${bar_width} + '%;'"></div>
+                            <span class="stat-ratio" th:text="${#numbers.formatDecimal(stat, 1, 1)}">0.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="comparison-note">* 막대 길이는 해당 스탯의 최대 가능치 대비 현재 수치를 나타냅니다.</p>
+            </div>
+
+        </div>
+
+        <h3 class="stat-table-title">원본 통계</h3>
+        <table class="raw-stats-table">
+            <thead>
+            <tr>
+                <th colspan="4" class="table-header-title">기본 정보</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="stat-row">
+                <td class="stat-label">키:</td>
+                <td class="stat-value" th:text="${fighter.height != null ? #numbers.formatInteger(fighter.height, 1) + ' cm' : 'N/A'}">N/A</td>
+                <td class="stat-label">몸무게:</td>
+                <td class="stat-value" th:text="${fighter.weight != null ? #numbers.formatInteger(fighter.weight, 1) + ' kg' : 'N/A'}">N/A</td>
+            </tr>
+            <tr class="stat-row">
+                <td class="stat-label">리치:</td>
+                <td class="stat-value" th:text="${fighter.reach != null ? #numbers.formatInteger(fighter.reach, 1) + ' cm' : 'N/A'}">N/A</td>
+                <td class="stat-label">자세:</td>
+                <td class="stat-value" th:text="${fighter.stance ?: 'N/A'}">N/A</td>
+            </tr>
+            </tbody>
+
+            <thead>
+            <tr>
+                <th colspan="4" class="table-header-title">승리 유형 (Total Wins: <span th:text="${fighter.totalWins}" class="highlight-number">0</span>)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="stat-row">
+                <td class="stat-label">KO/TKO 승:</td>
+                <td class="stat-value" th:text="${fighter.koTko ?: 0}">0</td>
+                <td class="stat-label">서브미션 승:</td>
+                <td class="stat-value" th:text="${fighter.subWins ?: 0}">0</td>
+            </tr>
+            <tr class="stat-row">
+                <td class="stat-label">판정 승:</td>
+                <td class="stat-value" th:text="${fighter.decWins ?: 0}">0</td>
+                <td class="stat-label">무승부:</td>
+                <td class="stat-value" th:text="${fighter.draws ?: 0}">0</td>
+            </tr>
+            </tbody>
+
+            <thead>
+            <tr>
+                <th colspan="4" class="table-header-title">패배 유형 (Total Losses: <span th:text="${fighter.totalLosses}" class="highlight-number">0</span>)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="stat-row">
+                <td class="stat-label">총 패배:</td>
+                <td class="stat-value" th:text="${fighter.totalLosses ?: 0}">0</td>
+                <td class="stat-label">총 경기수:</td>
+                <td class="stat-value" th:text="${fighter.total ?: 0}">0</td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+</main>
+
+<footer th:replace="~{layout/footer::footer}"></footer >
+
+</body>
+</html>

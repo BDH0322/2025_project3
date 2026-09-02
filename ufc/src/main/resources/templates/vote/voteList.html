@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UFC.GG - 승자 예측 투표</title>
+
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/vote_list.css}">
+</head>
+<body style="background-color: #0f0f0f; margin: 0;"> <header th:replace="~{layout/header::header}"></header>
+
+<div class="main-container">
+    <div class="mainunder-container">
+        <div class="vote-list-wrapper">
+
+            <header class="list-header">
+                <h1>👊 승자 예측 투표</h1>
+                <a th:href="@{/vote/vwrite}" class="btn-write"
+                sec:authorize="hasRole('ROLE_ADMIN')">새 투표 등록</a>
+            </header>
+
+            <div class="board-list">
+                <div class="board-row header">
+                    <div class="col-num">번호</div>
+                    <div class="col-title">대진 및 제목</div>
+                    <div class="col-weight">체급</div>
+                    <div class="col-status">상태</div>
+                    <div class="col-date">날짜</div>
+                </div>
+
+                <div th:each="vote : ${vote_boardList}" class="board-row item"
+                     th:onclick="|location.href='/vote/' + ${vote.boardNum}|"
+                     style="cursor: pointer;">
+                    <div class="col-num" th:text="${vote.boardNum}"></div>
+                    <div class="col-title">
+                        <span th:text="${vote.title}"></span>
+                        <span class="vote-count-label" th:text="' [' + (${vote.fighter1Votes} + ${vote.fighter2Votes}) + '명 참여]'"></span>
+                    </div>
+                    <div class="col-weight">
+                        <span class="badge-weight" th:classappend="${vote.weightClass}" th:text="${vote.weightClass}"></span>
+                    </div>
+                    <div class="col-status">
+                        <span th:if="${!vote.closed}" class="status-open">진행중</span>
+                        <span th:if="${vote.closed}" class="status-closed">마감</span>
+                    </div>
+                    <div class="col-date" th:text="${vote.createdAt != null ? #temporals.format(vote.createdAt, 'MM-dd') : '-'}"></div>
+                </div>
+
+                <div th:if="${paging.isEmpty()}" class="no-data">등록된 투표가 없습니다.</div>
+            </div>
+
+            <div th:if="${!paging.isEmpty()}" class="pagination">
+                <ul>
+                    <li th:classappend="${!paging.hasPrevious()} ? 'disabled'">
+                        <a th:href="${paging.hasPrevious()} ? @{|?page=${paging.number-1}|} : '#'">이전</a>
+                    </li>
+                    <li th:each="page: ${#numbers.sequence(0, paging.totalPages - 1)}"
+                        th:classappend="${page == paging.number} ? 'active'">
+                        <a th:text="${page + 1}" th:href="@{|?page=${page}|}"></a>
+                    </li>
+                    <li th:classappend="${!paging.hasNext()} ? 'disabled'">
+                        <a th:href="${paging.hasNext()} ? @{|?page=${paging.number+1}|} : '#'">다음</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="search-wrapper">
+                <form th:action="@{/vote/vlist}" method="get" class="search-form">
+                    <input type="text" name="keyword" th:value="${keyword}"
+                           placeholder="제목 또는 넘버링 검색..." class = "input-search">
+                    <button type ="submit" class="btn-search">검색</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout/footer::footer}"></footer>
+</body>
+</html>

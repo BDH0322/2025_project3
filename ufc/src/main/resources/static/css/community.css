@@ -1,0 +1,518 @@
+:root {
+    --color-sidebar-bg: #1a1a1a;
+    --color-active-bg: #333333;
+    --color-accent: #fca311;
+    --color-text-primary: white;
+    --color-text-secondary: #ccc;
+    --color-border: #333;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    background-color: #000000;
+}
+
+/* 0. 기본 타이틀 */
+.community-page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-text-primary);
+    margin-bottom: 16px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.main-content-wrapper {
+    margin-top: 1rem; /* 헤더 아래 16px 간격 */
+    padding-left: 1.5rem; /* 좌우 24px 여백 */
+    padding-right: 1.5rem;
+    padding-bottom: 20px;
+}
+
+/* 메인 영역 (사이드바와 게시판을 좌우로 배치) */
+.content4_community {
+    display: flex;
+    gap: 1rem; /* 16px (사이드바와 게시판 사이의 간격) */
+}
+
+/* 게시판 타이틀 스타일 */
+.community-page-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--color-text-primary);
+    margin-bottom: 16px;
+}
+
+/* 4. Sidebar 컴포넌트 스타일 */
+.sidebar-section {
+    width: 250px; /* 고정된 너비 */
+    flex-shrink: 0;
+    background-color: var(--color-sidebar-bg);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-self: flex-start;
+}
+
+.sidebar-section ul {
+    list-style: none; /* 리스트 마커(점) 제거 */
+    padding: 0;      /* 브라우저 기본 왼쪽 패딩 초기화 */
+    margin: 0;       /* 기본 상하 마진 초기화 */
+}
+
+.community-title {
+     color: var(--color-text-secondary);
+     font-size: 15px;
+     padding: 10px 20px;
+     font-weight: bold;
+ }
+
+.sidebar-item {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    padding: 8px 30px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    text-decoration: none;
+}
+.sidebar-item:hover {
+    background-color: #2c2c2c;
+}
+.sidebar-item-active {
+    background-color: var(--color-active-bg);
+    color: var(--color-text-primary);
+}
+
+.sidebar-title{
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+/* 5. Board Table */
+.board-section {
+    flex-grow: 1; /* 남은 공간을 모두 차지 */
+    overflow-x: auto;
+    background-color: #000000; /* 배경색 */
+    min-height: 500px;
+}
+
+.board-table {
+    width: 100%;
+    color: var(--color-text-primary);
+    border-collapse: collapse;
+}
+
+.board-table th, .board-table td {
+    padding: 12px 10px;
+    white-space: nowrap;
+}
+
+.board-table thead th {
+    font-size: 13px;
+    color: #777;
+    font-weight: normal;
+    border-bottom: 1px solid var(--color-border);
+    background-color: #000;
+}
+
+.board-table tbody tr {
+    border-bottom: 1px solid #222; /* 게시글 간 구분 밑줄임 */
+}
+
+.board-table tbody td{
+    text-align: center;
+}
+
+/* 2. 제목 셀(3번째 열 td)만 왼쪽 정렬로 되돌림 */
+.board-table tbody td:nth-child(3) {
+    text-align: left;
+}
+
+.board-table tbody tr:hover {
+    background-color: var(--color-sidebar-bg);
+}
+
+.board-cell-id, .board-cell-title, .board-cell-date, .board-cell-communityLike, .board-cell-viewCount, .board-cell-category {
+    font-family: monospace;
+    font-size: 15px;
+}
+
+.board-cell-title a,
+.board-cell-title a:visited {
+    color: inherit;
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.board-cell-id {
+  position: relative;
+}
+
+.notice-row { /* 공지글 번호 */
+    background-color: #483D8B;
+    font-weight: bold;
+}
+
+.admin-color {
+    color: #ff9900 !important; /* 시그니처 오렌지색 */
+    font-weight: bold !important;
+    letter-spacing: 0.5px;
+    /* 약간의 광채 효과 */
+    text-shadow: 0 0 8px rgba(255, 153, 0, 0.4);
+}
+
+/* 공지 텍스트 배지 스타일 */
+.badge-notice {
+    background-color: #ff4d4d; /* 빨간색 배경 */
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block; /* 셀 안에서 깔끔하게 보이도록 */
+}
+
+.user-popup {
+  display: none; /* hidden by default */
+  position: absolute;
+  top: 100%; /* td 바로 아래 */
+  left: 0;
+  min-width: 170px;
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  padding: 8px;
+  z-index: 999;
+  border-radius: 6px;
+}
+
+/* 버튼들 스타일(선택적) */
+.user-popup button {
+  display: block;
+  width: 100%;
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: transparent;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.user-popup h3 {
+  margin: 0 0 6px 0;
+  font-size: 14px;
+}
+
+/* 글쓰기 버튼 */
+
+.write-button-row {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽 끝으로 보냄 */
+    padding-top: 15px; /* 테이블과의 간격 */
+    padding-bottom: 15px;
+    flex-shrink: 0;
+}
+
+/* 6. Static Write Button 스타일 (Position Fixed 제거) */
+.board-write-btn {
+
+    background-color: var(--color-accent); /* 오렌지색 배경 */
+    color: #000;                     /* 검정색 텍스트 */
+    font-weight: bold;
+    font-size: 16px;
+
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px; /* 둥근 모서리 */
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* 그림자 약하게 */
+    transition: background-color 0.2s, transform 0.1s;
+
+    /* z-index는 이제 필요 없지만, 혹시 모를 상황에 대비해 낮춥니다. */
+    z-index: 100;
+}
+
+.board-write-btn:hover {
+    background-color: #ffb74d;
+    transform: translateY(-1px);
+}
+
+.board-write-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 게시글 검색 바 */
+
+/* 1. 검색 폼 전체 레이아웃 (이전에 이미 적용했을 수 있음) */
+.search-form {
+    display: flex; /* 요소들을 가로로 나열 */
+    align-items: center;
+}
+
+/* 2. search-select 스타일 수정: 주황색 배경의 버튼처럼 보이게 */
+.search-select {
+    padding: 8px 12px;
+    background-color: #ff9900; /* 주황색 배경 */
+    color: #0d0d0d; /* 검은색 텍스트 */
+    border: 1px solid #ff9900; /* 주황색 테두리 */
+    font-weight: bold;
+    cursor: pointer;
+    width: auto; /* 내용에 따라 너비 자동 조절 */
+    margin-right: 0; /* 입력창과 붙이기 위해 마진 제거 */
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    font-size: 14px;
+}
+
+/* 3. search-input 스타일 수정: select와 경계선을 맞추고 왼쪽 모서리를 제거 */
+.search-input {
+    padding: 8px 12px;
+    border-left: none; /* select 박스와 붙여서 경계선 제거 */
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px; /* 검색 버튼과 붙이기 위해 오른쪽 모서리도 제거 */
+    border-bottom-right-radius: 5px;
+    margin-right: 0;
+}
+
+/* 4. search-btn 스타일 수정: 입력창과 붙이고 오른쪽 모서리를 둥글게 처리 */
+.search-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 8px 15px;
+    margin-left: -1px; /* 입력창 경계와 겹치게 하여 붙임 */
+    display: flex;
+    align-items: center;
+}
+
+.board-section .bottom-controls-row {
+    display: flex; /* Flex 적용: 검색 바와 글 쓰기 버튼을 나란히 */
+    justify-content: space-between; /* 검색 바(왼쪽)와 글 쓰기 버튼(오른쪽)을 양 끝으로 분리 */
+    align-items: center; /* 수직 중앙 정렬 */
+    margin-top: 20px;
+    gap: 20px; /* 요소 간의 간격 */
+    padding: 0 0px;
+}
+
+/* (2) 검색 바 및 주변 영역 (대부분의 공간을 차지) */
+.board-section .search-and-write-container {
+    flex-grow: 1; /* 남은 공간을 최대한 차지 */
+}
+
+/* (3) 검색 바 섹션 자체 */
+.board-section .board-search-section {
+    width: 100%;
+    padding: 5px; /* 내부 여백 */
+    /* 빨간색 테두리 제거 */
+    border-radius: 5px;
+}
+
+/* (4) 검색 폼: input과 button을 가로로 배치 */
+.board-search-section .search-form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    border: 1px solid var(--color-accent); /* 주황색 테두리 */
+    background-color: #1a1a1a;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* (5) 입력 필드 */
+.board-search-section .search-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--color-text-primary);
+    font-size: 16px;
+}
+
+/* (6) 플레이스홀더 텍스트 */
+.board-search-section .search-input::placeholder {
+    color: var(--color-text-secondary);
+    text-align: center;
+}
+
+/* (7) 검색 버튼 */
+.board-search-section .search-btn {
+    width: 50px;
+    height: 48px; /* 입력 필드 높이에 맞춤 */
+    background-color: var(--color-accent);
+    color: black;
+    font-size: 20px;
+    border: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background-color 0.2s;
+}
+
+.board-search-section .search-btn:hover {
+    background-color: #e09610;
+}
+
+/* (8) 글 쓰기 버튼 영역 (너비 고정) */
+.board-section .write-button-area {
+    flex-shrink: 0;
+}
+
+.paging-container {
+    display: flex;
+    justify-content: center; /* 가운데 정렬 */
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.pagination {
+    list-style: none; /* 리스트 앞에 점 제거 */
+    padding: 0; /* 내부 패딩 제거 */
+    display: flex; /* 항목들을 가로로 배열 */
+}
+
+.pagination li {
+    margin: 0 5px; /* 각 항목(버튼) 사이의 가로 간격 */
+}
+
+.pagination a {
+    text-decoration: none; /* 기본 링크 밑줄 제거 */
+    padding: 8px 12px; /* 버튼 내부의 상하좌우 여백 */
+
+    /* [🌟 변경] 기본 버튼 스타일 (노란색/흰색 테마 적용) */
+    border: 1px solid #e09610; /* 테두리 색상: 노란색(금색) */
+    background-color: #333; /* 기본 배경색: 어두운 색상 (검은색 배경에 대비) */
+    color: white; /* 글자 색상: 흰색으로 반전 */
+
+    border-radius: 4px; /* 버튼 모서리를 둥글게 처리 */
+    transition: background-color 0.3s; /* 색상 변경 시 부드러운 전환 효과 */
+}
+
+.pagination a:hover {
+    /* [🌟 변경] 마우스 오버 시 스타일 */
+    background-color: #e09610; /* 호버 시 배경색: 노란색(금색) */
+    border-color: #e09610; /* 호버 시 테두리색도 동일하게 */
+    color: #222; /* 호버 시 글자 색상: 어두운 색으로 변경 (시인성 확보) */
+}
+
+.pagination .active a {
+    /* [🌟 변경] 현재 페이지 (활성화) 버튼 스타일 */
+    background-color: #e09610; /* 활성화 배경색: 노란색(금색) */
+    color: #222; /* 활성화 글자 색상: 어두운 색 */
+    border-color: #e09610; /* 활성화 테두리 색상: 노란색 */
+}
+
+.pagination .disabled a {
+    /* [🌟 변경] 비활성화 버튼 스타일 (예: 1페이지의 '이전') */
+
+    /* 1페이지의 '이전' 버튼을 다른 버튼과 동일한 테마로 유지 */
+    background-color: #333; /* 기본 배경색 유지 */
+    border-color: #e09610; /* 테두리색 유지 */
+    color: #777; /* 글자색은 약간 어둡게 하여 비활성화 느낌 표현 */
+
+    pointer-events: none; /* 클릭 이벤트 비활성화 유지 */
+    cursor: default; /* 마우스 커서를 기본 화살표로 유지 */
+}
+
+/* 첫 페이지와 마지막 페이지 이동 버튼의 특수 기호 색상을 흰색으로 명시 */
+.pagination li:first-child a,
+.pagination li:last-child a {
+    color: white;
+}
+
+/* 시그니처 오렌지 코드 #e09610 */
+
+/* side-memo */
+.memo-open-btn {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 100px;
+    background-color: #ff9900;
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    writing-mode: vertical-lr;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+}
+
+.side-memo-window {
+    position: fixed;
+    right: -320px; /* 창 너비보다 더 밀어내기 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-memo-window.active {
+    right: 0;
+}
+
+.memo-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memo-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.memo-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검정 배경에 투명도 0.5 적용 */ /* color: #000000; opacity : 0.5; */
+}
+
+.memo-content textarea {
+    width: 100%;
+    height: 330px; /* 헤더 높이 제외한 적당한 높이 */
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    resize: none;
+
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+
+    /* 공책 줄무늬 디자인 (linear-gradient 사용) */
+    background: transparent; /* 배경은 부모의 rgba(0,0,0,0.5)를 따라감 */
+    background-image: linear-gradient(#555 1px, transparent 1px); /* 줄 색상 (#555) */
+    background-size: 100% 30px; /* 줄 간격 30px (line-height와 일치시켜야 함) */
+    background-attachment: local; /* 스크롤 시 줄무늬도 같이 이동 */
+}
+
+/* 스크롤바 디자인 */
+.memo-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+.memo-content textarea::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}

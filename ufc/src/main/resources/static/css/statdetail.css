@@ -1,0 +1,441 @@
+/* ========================================================= */
+/* 1. 기본 레이아웃 및 다크 테마 설정 */
+/* ========================================================= */
+
+body {
+    background-color: #000000; /* 검은색 배경 */
+    color: #FFFFFF; /* 기본 글자색 흰색 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.content-wrapper {
+    /* 헤더/푸터를 제외한 메인 콘텐츠 영역 */
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.stat-container {
+    padding: 30px;
+    background-color: #0d0d0d; /* 콘텐츠 내부 배경: 아주 어두운 회색 */
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.section-title {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+/* ========================================================= */
+/* 2. 차트 영역 (다이아몬드 및 막대 그래프) */
+/* ========================================================= */
+
+.stat-grid-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-bottom: 60px;
+    padding: 20px 0;
+    background-color: #1a1a1a; /* 섹션 배경: 검은색보다 살짝 진하게 */
+    border-radius: 8px;
+}
+
+/* --- 차트 영역 카드 스타일 --- */
+.diamond-chart-area, .global-stats-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    /* 상하좌우 여백을 충분히 확보하여 차트 레이블이 넘치지 않게 합니다. */
+    padding: 40px 20px;
+    border-radius: 8px;
+    background-color: #111111; /* 차트 카드 배경색: 더 어둡게 */
+    box-shadow: 0 4px 10px rgba(255, 153, 0, 0.2); /* 주황색 계열 그림자 */
+    border: 1px solid #333333;
+}
+
+.chart-title, .global-stat-title {
+    font-size: 1.3em;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #FF9900; /* 주황색 제목 밑줄 */
+    padding-bottom: 5px;
+}
+
+
+/* ========================================================= */
+/* 3. 다이아몬드 차트 (SVG) 스타일 */
+/* ========================================================= */
+
+.diamond-chart {
+    position: relative;
+    width: 300px; /* 고정 너비 */
+    height: 300px; /* 고정 높이 */
+    /* 차트 자체에 여백을 주어 레이블 공간을 확보 */
+    margin: 30px 0;
+}
+
+/* SVG 기본 스타일 */
+.radar-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible; /* 레이블이 밖으로 나가도록 허용 */
+}
+
+.radar-bg {
+    fill: #222222; /* 배경 다이아몬드 내부: 진한 회색 */
+    stroke: #444444; /* 축 및 외곽선 색상 */
+    stroke-width: 1;
+}
+
+/* 데이터 폴리곤 (채워지는 영역) */
+.data-polygon {
+    fill: rgba(255, 153, 0, 0.7); /* 주황색 계열로 채우기 (투명도 0.7) */
+    stroke: #FF9900; /* 주황색 외곽선 */
+    stroke-width: 2;
+    transition: all 0.5s ease-out;
+}
+
+/* --- 스탯 레이블 위치 (한글화 고려하여 조정) --- */
+.chart-label {
+    position: absolute;
+    color: #FFFFFF; /* 글자색 흰색 */
+    font-weight: 500;
+    font-size: 0.9em;
+    text-shadow: 0 0 2px rgba(0,0,0,0.5);
+    padding: 0;
+    white-space: nowrap; /* 글자가 줄바꿈 되지 않게 */
+}
+
+/* 위치 조정: 영역을 벗어나지 않게 미세 조정 */
+.top-label {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.right-label {
+    top: 50%;
+    right: -50px; /* 오른쪽 여백 확보 */
+    transform: translateY(-50%);
+}
+.bottom-label {
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.left-label {
+    top: 50%;
+    left: -50px; /* 왼쪽 여백 확보 */
+    transform: translateY(-50%);
+}
+
+
+/* ========================================================= */
+/* 4. 글로벌 비교 막대 스타일 */
+/* ========================================================= */
+
+.comparison-list {
+    width: 100%;
+}
+
+.comparison-item {
+    margin-bottom: 15px;
+}
+
+.stat-name {
+    font-size: 0.9em;
+    color: #FFFFFF; /* 스탯 이름 흰색 */
+    display: block;
+    margin-bottom: 5px;
+}
+
+.stat-bar-container {
+    /* 🚨 막대 빈 공간 배경색: 반투명 흰색으로 설정 */
+    background-color: rgba(255, 255, 255, 0.1);
+    height: 20px;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3); /* 음영 추가 */
+}
+
+.stat-bar {
+    background: linear-gradient(to right, #FFBB33, #FF9900); /* 주황색 막대 */
+    height: 100%;
+    transition: width 0.5s ease;
+}
+
+.stat-ratio {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    /* 수치 가독성 개선 */
+    color: #FFFFFF; /* 기본 흰색 */
+    font-weight: bold;
+    font-size: 0.85em;
+    padding: 0 5px;
+    background-color: rgba(0, 0, 0, 0.4); /* 글자 주변에 배경을 줘서 막대 색상과 분리 */
+    border-radius: 2px;
+}
+
+.comparison-note {
+    font-size: 0.8em;
+    color: #aaaaaa;
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* ========================================================= */
+/* 5. 기타 및 반응형 디자인 */
+/* ========================================================= */
+
+.stat-table-title {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333333;
+    padding-bottom: 5px;
+}
+
+@media (max-width: 1200px) {
+    .stat-grid-wrapper {
+        gap: 20px;
+    }
+}
+
+@media (max-width: 850px) {
+    .stat-grid-wrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+    }
+    .diamond-chart-area, .global-stats-area {
+        width: 90%; /* 모바일에서 폭을 늘림 */
+        max-width: 450px;
+    }
+}
+/* ================================================= */
+/* 파이터 프로필 카드 스타일 (Stat 섹션과 통일된 디자인 및 최종 정렬) */
+/* ================================================= */
+
+.fighter-profile-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* 스탯 섹션 카드와 유사한 배경 */
+    background-color: #242424;
+    /* 내부 패딩 증가 (크기 확대) */
+    padding: 35px 50px;
+    margin-bottom: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    /* 전체 카드 최대 너비 증가 */
+    max-width: 1300px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #e0e0e0;
+    /* 강조색 테두리 */
+    border: 1px solid rgba(255, 153, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.profile-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+/* 파이터 사진 스타일 */
+.profile-photo {
+    /* 사진 크기 대폭 확대 */
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    /* 얼굴 중심으로 초점 변경 */
+    object-position: center top;
+    /* 테두리 굵기 및 색상 */
+    border: 4px solid #ff9900;
+    margin-right: 35px;
+    box-shadow: 0 0 15px rgba(255, 153, 0, 0.4);
+}
+
+.fighter-info-main {
+    text-align: left;
+}
+
+/* 파이터 이름 스타일 */
+.fighter-name-display {
+    /* 이름 폰트 크기 확대 */
+    font-size: 2.8em;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 8px 0;
+}
+
+/* 오른쪽 정보 영역 스타일 (Grid 사용) */
+.profile-right {
+    display: grid;
+    /* 🚨 수정: 레이블 너비를 고정값(150px)으로 지정하여 간격 제어 */
+    /* 값은 내용 크기만큼만 차지하도록 auto로 설정 */
+    grid-template-columns: 150px auto;
+
+    /* 🚨 유지: 항목과 값 사이의 간격 5px로 좁힘 */
+    gap: 12px 5px;
+    align-items: center;
+    font-size: 1.1em;
+    flex-grow: 1;
+    /* 전체 Grid 컨테이너를 오른쪽 끝으로 정렬 */
+    justify-content: flex-end;
+    padding-left: 20px;
+}
+
+/* 개별 정보 아이템 */
+.info-item {
+    display: contents;
+}
+
+/* 아이콘 스타일 */
+.icon {
+    color: #ff9900;
+    margin-right: 10px;
+    font-size: 1.3em;
+    width: 20px;
+    text-align: center;
+    grid-column: 1 / 2;
+}
+
+/* 정보 레이블 (경기 시간, 전적, 랭킹, 체급) */
+.info-label {
+    color: #a0a0a0;
+    margin: 0;
+    grid-column: 1 / 2;
+    display: flex;
+    align-items: center;
+    /* 🚨 수정: 레이블을 Grid 첫 번째 열의 오른쪽 끝으로 정렬 (값과 딱 붙음) */
+    justify-content: flex-end;
+}
+
+/* 정보 값 */
+.info-text, .record-display, .rank-display, .weight-class-display {
+    color: #e0e0e0;
+    font-weight: 500;
+    grid-column: 2 / 3;
+    /* 🚨 수정: 값도 레이블과 가깝게 붙도록 왼쪽 정렬 */
+    text-align: left;
+}
+.info-text{
+    text-align: center;
+}
+
+/* 전적, 랭킹 값 강조 */
+.record-display, .rank-display {
+    font-weight: 700;
+    /* 주황색으로 강조 통일 */
+    color: #ff9900;
+}
+.rank-display {
+    text-align: center;
+}
+
+/* ========================================================= */
+/* 7. 원본 통계 테이블 스타일 (RAW Stats Table) */
+/* ========================================================= */
+
+.raw-stats-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #000000;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+}
+
+.raw-stats-table thead {
+    background-color: #2c2c2c;
+    border-bottom: 2px solid #ff9900;
+}
+
+.table-header-title {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #FFFFFF;
+    padding: 15px 20px;
+    text-align: left;
+    text-shadow: 0 0 5px rgba(255, 153, 0, 0.3);
+}
+
+/* 테이블 본문 행 */
+.stat-row {
+    border-bottom: 1px solid #1a1a1a;
+}
+
+.stat-row:last-child {
+    border-bottom: none;
+}
+
+/* 데이터 레이블 (키, 몸무게 등) */
+.stat-label {
+    width: 25%;
+    color: #a0a0a0;
+    font-size: 1em;
+    font-weight: 400;
+    padding: 12px 20px;
+    text-align: right;
+    background-color: #111111;
+}
+
+/* 데이터 값 (실제 수치) */
+.stat-value {
+    width: 25%;
+    color: #e0e0e0;
+    font-weight: 600;
+    padding: 12px 10px;
+    text-align: left;
+}
+
+/* 승리 횟수 하이라이트 */
+.highlight-number {
+    color: #ff9900;
+    font-weight: 700;
+    margin-left: 5px;
+}
+
+/* 홀수 번째 행 배경색 미세 조정 */
+.raw-stats-table tbody tr:nth-child(odd) .stat-label,
+.raw-stats-table tbody tr:nth-child(odd) .stat-value {
+    background-color: #0a0a0a;
+}
+
+/* 짝수 번째 행 배경색 미세 조정 */
+.raw-stats-table tbody tr:nth-child(even) .stat-label,
+.raw-stats-table tbody tr:nth-child(even) .stat-value {
+    background-color: #111111;
+}
+
+/* 모바일 반응형 (필요에 따라) */
+@media (max-width: 600px) {
+    .raw-stats-table {
+        font-size: 0.9em;
+    }
+    .table-header-title {
+        padding: 10px 15px;
+    }
+    .stat-label, .stat-value {
+        padding: 8px 10px;
+    }
+}

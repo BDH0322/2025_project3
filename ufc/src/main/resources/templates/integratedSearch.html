@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>통합 검색</title>
+    <link rel="stylesheet" th:href="@{/css/integratedSearch.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script defer th:src="@{/js/integratedSearch.js}"></script>
+</head>
+<body>
+<header th:replace="~{layout/header::header}"></header>
+
+<main class="search-container">
+
+    <h1 class="search-title">"<span th:text="${keyword}">키워드</span>"에 대한 검색 결과</h1>
+
+    <ul class="filter-section">
+        <li><a href="#" onclick="filterSection('all', event)">통합검색</a></li>
+        <li><a href="#" onclick="filterSection('fighters', event)">선수</a></li>
+        <li><a href="#" onclick="filterSection('user', event)">회원 이름</a></li>
+        <li><a href="#" onclick="filterSection('community', event)">게시글</a></li>
+        <li><a href="#" onclick="filterSection('reply', event)">댓글</a></li>
+        <li><a href="#" onclick="filterSection('vote',event)">투표 게시판</a> </li>
+    </ul>
+
+    <section class="fighters-section">
+        <h2>🥊 선수 이름</h2>
+        <div th:if="${results.fighters.totalElements > 0}" class="result-list">
+            <div th:each="fighter : ${results.fighters}" class="result-item">
+                <a th:href="@{/fighter/{name}(name=${fighter.name})}">
+                    <span th:text="${fighter.name}">선수 이름</span>
+                    <small th:text="|(${fighter.weightClass})|">라이트급</small>
+                </a>
+            </div>
+        </div>
+        <p th:unless="${results.fighters.totalElements > 0}" class="no-result">검색된 선수가 없습니다.</p>
+    </section>
+
+    <section class="user-section">
+        <h2>👤 회원 이름</h2>
+        <div th:if="${results.member.totalElements > 0}" class="result-list">
+            <div th:each="m : ${results.member}" class="result-item">
+                <span th:text="${m.name}">회원 이름</span> (<span th:text="${m.id}">아이디</span>)
+            </div>
+        </div>
+        <p th:unless="${results.member.totalElements > 0}" class="no-result">검색된 회원이 없습니다.</p>
+    </section>
+
+    <section class="community-section">
+        <h2>📝 게시글</h2>
+        <div th:if="${results.post.totalElements > 0}" class="result-list">
+            <div th:each="p : ${results.post}" class="result-item">
+                <a th:href="@{/community/communitypost(communityContentNumber=${p.communityContentNumber})}">
+                    <strong th:text="${p.communityTitle}">게시글 제목</strong>
+                    <p th:text="${#strings.abbreviate(p.communityContent, 100)}">본문 요약...</p>
+                </a>
+            </div>
+        </div>
+        <p th:unless="${results.post.totalElements > 0}" class="no-result">검색된 게시글이 없습니다.</p>
+    </section>
+
+    <section class="reply-section">
+        <h2>💬 댓글</h2>
+        <div th:if="${results.reply.totalElements > 0}" class="result-list">
+            <div th:each="r : ${results.reply}" class="result-item">
+                <p th:text="${r.replyContent}">댓글 내용</p>
+                <small>게시글 번호: [[${r.communityContentNumber}]]</small>
+            </div>
+        </div>
+        <p th:unless="${results.reply.totalElements > 0}" class="no-result">검색된 댓글이 없습니다.</p>
+    </section>
+
+    <section class="vote-section">
+        <h2>🗳️ 투표 게시판</h2>
+        <div th:if="${results.votes != null and results.votes.totalElements>0}" class="result-list">
+            <div th:each="v : ${results.votes}" class="result-item">
+                <a th:href="@{/vote/{num}(num=${v.boardNum})}">
+                    <strong th:text="${v.title}">투표 제목</strong>
+                    <p style="margin: 5px 0; font-size:0.9em; color:#ccc;">
+                        <span th:text="${v.fighter1Name}">선수1</span>
+                        <span style="color: #ff9900;">VS</span>
+                        <span th:text="${v.fighter2Name}">선수2</span>
+                    </p>
+                    <small style="color:#888;">
+                        총 투표수: [[${v.fighter1Votes + v.fighter2Votes}]] |
+                        작성일: [[${#temporals.format(v.createAt, 'yyyy-MM-dd')}]]
+                    </small>
+                </a>
+            </div>
+        </div>
+        <p th:unless="${results.votes != null and results.votes.totalElements > 0}" class="no-result">
+            검색된 투표 게시글이 없습니다.
+        </p>
+    </section>
+
+
+
+    <div class="integratedSearch">
+        <form action="/FrontController/integratedSearch" class="main-content-search">
+            <input type="text" name="keyword" placeholder="선수 이름, 경기 일정, 랭킹 정보 검색..." class="main-content-search-input">
+
+            <button class="main-content-search-button" type="submit">🔍</button>
+        </form>
+    </div>
+</main>
+
+<button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+<div id="side-memo" class="side-memo-window">
+    <div class="memo-header">
+        <h3>Quick Memo</h3>
+        <button type="button" id="closeMemoBtn">X</button>
+    </div>
+    <div class="memo-content">
+        <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+    </div>
+</div>
+
+
+
+<footer th:replace="~{layout/footer::footer}"></footer>
+
+</body>
+</html>

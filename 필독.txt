@@ -1,0 +1,11 @@
+*필독*
+
+1. requirements에 라이브러리를 다운받아주세요.
+  pip install -r requirements.txt
+
+2. savedb.py를 1회 실행해주세요.
+  UFC_ALL_FIGHTERS_FOR_DB 엑셀 파일에 있는 선수들의 정보가 테이블에 들어갑니다.
+
+3. UPDATE FIGHTER 파일의 SQL문을 1회 실행해주세요.
+  선수들의 이미지 파일이 FIGHTER 테이블에 선수의 사진이 저장됩니다.
+

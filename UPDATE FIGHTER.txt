@@ -1,0 +1,287 @@
+/* 선수들의 이미지 파일을 FIGHTER 테이블 IMAGE_URL 컬럼에 업로드하는 SQL문 입니다. 이 SQL문을 한 번 실행해주세요! */
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/PAVLOVICH_SERGEI_L_08-23.png' 
+WHERE NAME = 'Sergei Pavlovich';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/VOLKOV_ALEXANDER_L_06-22.png' 
+WHERE NAME = 'Alexander Volkov';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/GANE_CIRYL_L_12-07.png' 
+WHERE NAME = 'Ciryl Gane';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/BLAYDES_CURTIS_L_06-21.png' 
+WHERE NAME = 'Curtis Blaydes';
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/ALMEIDA_JAILTON_L_01-18.png' 
+WHERE NAME = 'Jailton Almeida';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/CORTES-ACOSTA_WALDO_L_03-15.png' 
+WHERE NAME = 'Waldo Cortes-Acosta';
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/SPIVAC_SERGHEI_L_06-07.png' 
+WHERE NAME = 'Serghei Spivac';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/LEWIS_DERRICK_L_07-12.png' 
+WHERE NAME = 'Derrick Lewis';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/DELIJA_ANTE_R_09-06.png' 
+WHERE NAME = 'Ante Delija';
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/TYBURA_MARCIN_L_09-06.png' 
+WHERE NAME = 'Marcin Tybura';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/heavy/tom_aspinall.png' 
+WHERE NAME = 'Tom Aspinall';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/PEREIRA_ALEX_L_BELT_03-08.png' 
+WHERE NAME = 'Alex Pereira';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/PROCHAZKA_JIRI_L_10-04.png' 
+WHERE NAME = 'Jiri Prochazka';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/ANKALAEV_MAGOMED_L_10-26.png' 
+WHERE NAME = 'Magomed Ankalaev';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/ULBERG_CARLOS_L_09-27.png' 
+WHERE NAME = 'Carlos Ulberg';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/BLACHOWICZ_JAN_L_03-22.png' 
+WHERE NAME = 'Jan Blachowicz';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/ROUNTREE_KHALIL_L_12-09.png' 
+WHERE NAME = 'Khalil Rountree Jr.';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/HILL_JAMAHAL_L_06-21.png' 
+WHERE NAME = 'Jamahal Hill';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/RAKIC_ALEKSANDAR_L_10-26.png' 
+WHERE NAME = 'Aleksandar Rakic';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/REYES_DOMINICK_L_12-07.png' 
+WHERE NAME = 'Dominick Reyes';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/OEZDEMIR_VOLKAN_L_11-23.png' 
+WHERE NAME = 'Volkan Oezdemir';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light heavy/MURZAKANOV_AZAMAT_L_06-07.png' 
+WHERE NAME = 'Azamat Murzakanov';
+
+
+
+
+
+
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/CHIMAEV_KHAMZAT_L_BELTMOCK.png' 
+WHERE NAME = 'Khamzat Chimaev';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/DU_PLESSIS_DRICUS_L_01-20.png' 
+WHERE NAME = 'Dricus Du Plessis';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/IMAVOV_NASSOURDINE_L_09-06.png' 
+WHERE NAME = 'Nassourdine Imavov';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/STRICKLAND_SEAN_L_06-01.png' 
+WHERE NAME = 'Sean Strickland';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/DE-RIDDER_REINIER_L_10-18.png' 
+WHERE NAME = 'Reinier de Ridder';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/ADESANYA_ISRAEL_L_02-01.png' 
+WHERE NAME = 'Israel Adesanya';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/HERNANDEZ_ANTHONY_L_10-19.png' 
+WHERE NAME = 'Anthony Hernandez';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/BORRALHO_CAIO_L_08-24.png' 
+WHERE NAME = 'Caio Borralho';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/WHITTAKER_ROBERT_L_07-26.png' 
+WHERE NAME = 'Robert Whittaker';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/ALLEN_BRENDAN_L_02-22.png' 
+WHERE NAME = 'Brendan Allen';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/middle/PAGE_MICHAEL_L_06-29.png' 
+WHERE NAME = 'Michael Page';
+
+
+
+
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/DELLA_MADDALENA_JACK_L_BELTMOCK.png' 
+WHERE NAME = 'Jack Della Maddalena';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/MUHAMMAD_BELAL_L_05-06.png' 
+WHERE NAME = 'Belal Muhammad';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/RAKHMONOV_SHAVKAT_L_12-07.png' 
+WHERE NAME = 'Shavkat Rakhmonov';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/EDWARDS_LEON_L_03-22.png' 
+WHERE NAME = 'Leon Edwards';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/USMAN_KAMARU_L_06-14.png' 
+WHERE NAME = 'Kamaru Usman';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/MACHADO_GARRY_IAN_L_04-26.png' 
+WHERE NAME = 'Ian Machado Garry';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/BUCKLEY_JOAQUIN_L_05-11.png' 
+WHERE NAME = 'Joaquin Buckley';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/MORALES_MICHAEL_L_08-24.png' 
+WHERE NAME = 'Michael Morales';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/PRATES_CARLOS_L_08-17.png' 
+WHERE NAME = 'Carlos Prates';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/COVINGTON_COLBY_L_12-14.png' 
+WHERE NAME = 'Colby Covington';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/welter/BRADY_SEAN_L_09-07.png' 
+WHERE NAME = 'Sean Brady';
+
+
+
+
+
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/TOPURIA_ILIA_L_BELT_10-26.png' 
+WHERE NAME = 'Ilia Topuria';
+
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/FMAKHACHEV_ISLAM_L_07-17.png' 
+WHERE NAME = 'Islam Makhachev';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/TSARUKYAN_ARMAN_L_01-18.png' 
+WHERE NAME = 'Arman Tsarukyan';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/HOLLOWAY_MAX_L_BMF_BELT_07-19.png' 
+WHERE NAME = 'Max Holloway';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/OLIVEIRA_CHARLES_L_10-11.png' 
+WHERE NAME = 'Charles Oliveira';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/GAETHJE_JUSTIN_L_03-08.png' 
+WHERE NAME = 'Justin Gaethje';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/HOOKER_DAN_L_08-17.png' 
+WHERE NAME = 'Dan Hooker';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/PIMBLETT_PADDY_L_07-27.png' 
+WHERE NAME = 'Paddy Pimblett';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/GAMROT_MATEUSZ_L_05-31.png' 
+WHERE NAME = 'Mateusz Gamrot';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/DARIUSH_BENEIL_L_06-28.png' 
+WHERE NAME = 'Beneil Dariush';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/light/FIZIEV_RAFAEL_L_06-21.png' 
+WHERE NAME = 'Rafael Fiziev';
+
+
+
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/VOLKANOVSKI_ALEXANDER_L_BELT_02-17.png' 
+WHERE NAME = 'Alexander Volkanovski';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/EVLOEV_MOVSAR_L_12-07.png' 
+WHERE NAME = 'Movsar Evloev';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/LOPES_DIEGO_L_09-13.png' 
+WHERE NAME = 'Diego Lopes';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/RODRIGUEZ_YAIR_L_04-12.png' 
+WHERE NAME = 'Yair Rodriguez';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/MURPHY_LERONE_L_08-16.png' 
+WHERE NAME = 'Lerone Murphy';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/STERLING_ALJAMAIN_L_04-13.png' 
+WHERE NAME = 'Aljamain Sterling';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/ALLEN_ARNOLD_L_07-27.png' 
+WHERE NAME = 'Arnold Allen';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/ZALAL_YOUSSEF_L_08-10.png' 
+WHERE NAME = 'Youssef Zalal';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/ORTEGA_BRIAN_L_08-23.png' 
+WHERE NAME = 'Brian Ortega';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/EMMETT_JOSH_L_10-04.png' 
+WHERE NAME = 'Josh Emmett';
+
+UPDATE FIGHTER
+SET IMAGE_URL = '/images/fighter/feather/SILVA_JEAN_L_02-22.png' 
+WHERE NAME = 'Jean Silva';
+
+
+
+
+
+commit;

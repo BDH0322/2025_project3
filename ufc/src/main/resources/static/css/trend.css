@@ -1,0 +1,856 @@
+/* trend.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    background-color: #000000;
+}
+
+/* 트렌드 페이지 기본값 */
+.content2_trend {
+    /* 헤더 아래부터 전체 너비를 사용합니다. */
+    width: 100%;
+    max-width: 1200px; /* 콘텐츠 최대 너비 제한 (선택 사항) */
+    margin: 0 auto; /* 중앙 정렬 */
+    padding: 30px 20px 80px 20px; /* 상, 좌우 여백 */
+    background-color: #000000; /* 어두운 배경 유지 */
+    color: white;
+}
+
+/* 1. 이 달의 하이라이트 */
+.highlight-section {
+
+}
+
+.highlight-title {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+}
+
+.highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4열 그리드 */
+    gap: 20px; /* 요소 간 간격 */
+}
+
+.highlight-item {
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.1);
+}
+
+/* 더보기 */
+.highlight-more-link {
+    display: block;
+    text-align: right; /* 오른쪽 정렬 */
+    margin-top: 15px;
+    font-size: 16px;
+    color: #cccccc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+/* 더보기 효과 */
+.highlight-more-link:hover {
+    color: #ff9900;
+}
+
+/* 2. '오늘 경기 일정' 섹션 스타일 */
+.schedule-section {
+
+}
+
+.schedule-title {
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+    display: block; /* block으로 변경하여 전체 너비를 사용하게 함 */
+    text-align: center; /* 텍스트를 중앙 정렬 */
+    margin: 50px auto 25px auto; /* 가운데 정렬을 위해 auto margin 사용 */
+    width: fit-content;
+}
+
+.schedule-list {
+    display: flex; /* 가로로 정렬 */
+    justify-content: center; /* 요소들을 균등하게 배치 */
+    align-items: flex-start;
+    padding: 20px 20px;
+    gap: 50px;
+}
+
+.schedule-match {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    color: #ff9900;
+}
+
+.schedule-match-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px; /* 매치 이름 텍스트와의 간격 */
+}
+
+.schedule-fighter-box {
+    /* 선수 이미지/정보 원형 박스 스타일 */
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    border-radius: 50%; /* 원형 */
+    border: 3px solid #333333;
+    overflow: hidden; /* 원 밖의 이미지 숨김 */
+    display: flex;
+    justify-content: center;
+}
+
+.schedule-fighter-box img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.vs-text {
+    font-size: 24px;
+    margin: 0 20px;
+    color: #ff9900;
+}
+
+.schedule-match-name {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+}
+
+/* 더보기 */
+.schedule-more-link {
+    display: block;
+    text-align: right; /* 오른쪽 정렬 */
+    margin-top: 10px;
+    font-size: 16px;
+    color: #cccccc;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+/* 3. 통계 */
+.statistic-section {
+    /*margin-top: 80px; */
+    /* margin-bottom: 80px; */
+    padding: 0 20px; /* 좌우 패딩 */
+    position: relative; /* 슬라이드 화살표 위치 지정을 위해 */
+}
+
+/* 통계 섹션 제목 스타일 (스크린샷과 유사하게) */
+.statistic-title {
+    font-size: 35px;
+    font-weight: bold;
+    /*margin-top: 50px; */
+    /*margin-bottom: 25px;*/
+    padding-bottom: 5px;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+}
+
+/* 슬라이드 영역을 시각적으로 감싸고 넘치는 부분을 숨김 */
+.slider-wrapper {
+    overflow: hidden;
+    position: relative; /* 화살표 위치 기준점 */
+    width: 100%
+    padding: 20px 0; /* 상하 패딩 */
+}
+
+/* 실제로 가로로 이동하는 컨테이너 */
+.statistic-container {
+    display: flex; /* 내부 페이지들을 가로로 나열 */
+    width: 300%; /* 페이지 3개 * 100% */
+    transition: transform 0.5s ease-in-out; /* 부드러운 슬라이드 애니메이션 */
+}
+
+/* 슬라이드 페이지 (각 컨텐츠 묶음: 최다연승, 파이트머니 등) */
+.statistic-page {
+    width: 33.333%; /* 부모(slider-wrapper)의 너비를 꽉 채움 */
+    flex-shrink: 0; /* 크기가 줄어들지 않게 함 */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* 카드와 하단 레이블 중앙 정렬 */
+}
+
+/* 카드 3개를 감싸고 배치하는 컨테이너 */
+.page-group {
+    display: flex; /* Flexbox를 사용하여 항목들을 한 줄에 배치 */
+    gap: 80px; /* 카드들 사이의 간격 */
+    justify-content: center; /* 왼쪽부터 배치 */
+    padding: 10px 0; /* 상하 여백 */
+}
+
+/* 개별 카드 그룹 (카드 + 이름) */
+.group-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 슬라이드가 추가될 경우 카드가 줄어들지 않도록 */
+    flex-shrink: 0;
+}
+
+/* 선수 카드 스타일 */
+.card-player {
+    /*background-color: #ff9900; /* 여기임 */
+    background-image: linear-gradient(to bottom, #ff9900, black);
+    width: 250px; /* 너비 */
+    height: 380px; /* 높이 */
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: relative;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.card-player img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 카드 내부의 정보 텍스트 스타일 */
+.player-info {
+    position: absolute;
+    bottom: 0; /* 카드의 맨 아래에 붙임 */
+    right: 0; /* 카드의 맨 오른쪽에 붙임 */
+    padding: 15px; /* 전체 텍스트 묶음의 여백 */
+
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    z-index: 5;
+    border-top-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    /* 내부 텍스트를 수직으로 쌓기 */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* 텍스트를 오른쪽으로 정렬 */
+    line-height: 1.4;
+}
+
+/* 개별 정보 요소 (.player-info) 스타일링 */
+.player-detail {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 14px;
+    /* margin을 주어 항목들 사이의 간격 조정 */
+    margin-top: 2px;
+}
+
+/* 카드 하단에 배치될 이름 스타일 */
+.player-name {
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 600;
+    margin-top: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+/* 하단 문구 (최다연승, 파이트머니, 요주의 인물) 스타일 */
+.group-label {
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    width: 100%;
+    margin-top: 50px;
+    color: #ffffff;
+}
+
+/* 슬라이드 버튼 임시 스타일 (나중에 실제로 슬라이드 기능을 추가할 때 사용) */
+.slide-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4); /* 배경색 추가 */
+    border: 2px solid #ff9900;
+    color: #ff9900;
+    font-size: 30px;
+    line-height: 1; /* 높이를 폰트 크기에 맞춤 */
+    cursor: pointer;
+    padding: 15px 10px;
+    z-index: 10;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.slide-button:hover {
+    background: #ff9900;
+    color: #000000;
+}
+
+.next-button {
+    right: 0px;
+}
+.prev-button {
+    left: 0px;
+}
+
+/* 통계 - JavaScript 슬라이더 스타일 */
+
+.statistic-section {
+    /* 기존 스타일 유지 */
+    margin-top: 80px;
+    margin-bottom: 80px;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* 점들을 감싸는 컨테이너 */
+.statistic-dots {
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    margin-top: 30px;
+    z-index: 10;
+}
+
+/* 개별 점 버튼 */
+.dot {
+    width: 12px;
+    height: 12px;
+    margin: 0 5px;
+    background-color: #666666; /* 비활성화된 점 색상 (어두운 회색) */
+    border: none;
+    border-radius: 50%; /* 원형으로 만듭니다. */
+    cursor: pointer;
+    padding: 0;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+/* 현재 활성화된 점 스타일 */
+.dot.active {
+    background-color: #ff9900; /* 활성화된 점 색상 (주황색) */
+    transform: scale(1.2); /* 강조를 위해 크기를 약간 키웁니다. */
+}
+
+/* 마우스 오버 시 스타일 */
+.dot:hover:not(.active) {
+    background-color: #aaaaaa; /* 마우스 오버 시 색상 변화 */
+}
+
+.hot-pagination-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20; /* 닷을 가장 위로 올림 */
+    /* 나머지는 .pagination-dots의 설정을 따라갑니다. */
+}
+
+/* --- 4. 핫 한 선수 & 요주의 인물 섹션 --- */
+.section-title4 {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+}
+
+.hot-fighter-section {
+    height: 700px; /* 섹션의 높이를 크게 설정 */
+    width: 100%;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden; /* 슬라이드 영역 바깥은 숨김 */
+    background-image: url('../images/trend/trend_bg.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* 배경 고정! (패럴랙스 효과) */
+}
+
+.hot-fighter-slide {
+    /* 슬라이더 영역의 중앙 정렬 및 좌우 여백 확보 */
+    max-width: 1400px; /* 배경 대비 내부 콘텐츠가 작아 보이도록 설정 */
+    height: 100%;
+    margin: 0;
+    position: relative; /* 버튼 위치 기준점 확보 */
+}
+
+/* 🔩 슬라이드 콘텐츠 묶음: .slide-page-bundle (이전 .hot-slider-content 역할) */
+.slide-page-bundle {
+    display: flex;
+    width: 300%; /* 페이지 3개 */
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+/* 🔩 각 슬라이드 페이지: .slide-page (이전 .hot-slide-page 역할) */
+.slide-page {
+    width: 33.333%;
+    flex-shrink: 0;
+    height: 100%;
+    position: relative;
+}
+
+/* 🔩 페이지 컨테이너: .page-container (새로운 공통 클래스 적용) */
+.page-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center; /* 중앙 정렬 */
+    align-items: flex-end; /* 아래쪽에 배치 */
+}
+
+/* 선수 사진 (위치 지정 유지) */
+.fighter-photo {
+    height: 500px;
+    position: absolute;
+    left: 410px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* 히스토리 박스 (위치 지정 유지) */
+.history-box {
+    position: absolute;
+    top: 55%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    height: 370px;
+    background-color: rgba(0, 0, 0, 0.5);
+    bottom: 100px;
+
+    padding: 30px;
+    border-radius: 5px;
+    color: white;
+    z-index: 1;
+
+    text-align: center;
+    font-size: 20px;
+    line-height: 1.8;
+}
+
+.info-group {
+    margin-bottom: 15px;
+}
+.info-label {
+    font-weight: 300;
+    color: #cccccc;
+    display: inline-block;
+    width: 120px;
+}
+.info-value {
+    font-weight: bold;
+    color: #ff9900;
+}
+.info-result {
+    font-size: 0.8em;
+    color: #ffffff;
+    margin-left: 10px;
+}
+.info-record {
+    font-weight: 500;
+}
+
+/* 🔩 하단 레이블: .page-label (이전 .fighter-bottom-label 역할) */
+.page-label {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50px;
+    font-size: 40px;
+    font-weight: 900;
+    color: white;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    z-index: 3;
+}
+
+/* 슬라이드 버튼 위치 조정 (오른쪽 화살표만 있는 경우) */
+.slide-button {
+    position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(0, 0, 0, 0.4); /* 배경색 추가 */
+        border: 2px solid #ff9900;
+        color: #ff9900;
+        font-size: 30px;
+        line-height: 1; /* 높이를 폰트 크기에 맞춤 */
+        cursor: pointer;
+        padding: 15px 10px;
+        z-index: 10;
+        border-radius: 5px;
+        transition: background 0.3s;
+}
+
+.slide-button:hover {
+    background: #ff9900;
+    color: #000000;
+}
+
+.hot-prev-button {
+    left: 0px;
+}
+.hot-next-button {
+    right: 0px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.dot.active {
+    background-color: #ff9900;
+    transform: scale(1.2);
+}
+
+/* --- 5. 트레쉬 토크 --- */
+.section-title5 {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+}
+
+.trash-talk-section {
+    padding: 0 30px; /* 요청하신 좌우 여백 30px 적용 */
+    margin-bottom: 50px; /* 섹션 하단 여백 */
+}
+
+/* 좌우 분할을 위한 컨테이너 */
+.trash-talk-container {
+    display: flex; /* Flexbox를 사용하여 좌우 섹션 배치 */
+    gap: 100px; /* 왼쪽 섹션과 오른쪽 섹션 사이의 간격 */
+    justify-content: flex-start; /*space-between;*/
+}
+
+/* 왼쪽 섹션 (약 65%) */
+.trash-left-section {
+    /* 라지 박스(700px)를 수용할 수 있는 너비 */
+    width: 700px;
+    flex-shrink: 0; /* 너비가 고정되도록 설정 */
+    display: flex;
+    flex-direction: column; /* 내부 요소들을 수직으로 배치 */
+    gap: 50px; /* 내부 요소들 (라지 박스와 미들 박스 행) 사이의 간격 */
+}
+
+/* 오른쪽 섹션 (약 35%) */
+.trash-right-section {
+    /* 쇼츠/미들 박스(290px)를 수용할 수 있는 너비 */
+    width: 320px;
+    flex-shrink: 0; /* 너비가 고정되도록 설정 */
+    display: flex;
+    flex-direction: column; /* 내부 요소들을 수직으로 배치 */
+    gap: 30px; /* 내부 요소들 (쇼츠 박스, 미들 박스) 사이의 간격 */
+}
+
+/* 라지 박스 */
+.trash-box-large {
+    width: 700px;
+    height: 440px;
+    background-color: #333; /* 임시 배경색 */
+    border-radius: 10px;
+    color: white;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */ /* 콘텐츠에 제목을 넣기 위해 3항목을 LARGE,MIDDEL,SHORT에서 삭제 */
+}
+
+/* 미들 박스를 가로로 묶는 래퍼 */
+.trash-box-bundle {
+    display: flex;
+    gap: 60px; /* 320*2+60) */
+    justify-content: space-between;
+}
+
+/* 미들 박스 */
+.trash-box-middle {
+    width: 320px;
+    height: 260px;
+    background-color: #555; /* 임시 배경색 */
+    border-radius: 10px;
+    color: white;
+}
+
+/* 쇼츠 박스 */
+.trash-box-shorts {
+    width: 320px;
+    height: 600px;
+    background-color: #222; /* 임시 배경색 */
+    border-radius: 10px;
+    color: white;
+}
+
+/* 제목을 넣기 위해 내부 콘텐츠를 수직으로 배치 */
+.trash-box-large,
+.trash-box-middle,
+.trash-box-shorts {
+    display: flex;
+    flex-direction: column; /* 내용을 위에서 아래로 쌓습니다. */
+    padding: 0; /* 내부 패딩이 있다면 제거 */
+}
+
+/* 영상이 들어갈 영역 */
+.video-container {
+    flex-grow: 1;
+    width: 100%;
+    overflow: hidden;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* 제목이 들어갈 영역 */
+.video-title {
+    height: 40px; /* <--- 제목 공간으로 사용할 높이 (예: 40px) */
+    width: 100%;
+    background-color: #1a1a1a; /* 제목 배경색 (선택 사항) */
+    display: flex;
+    align-items: center; /* 텍스트를 수직 중앙 정렬 */
+    padding: 0 10px; /* 좌우 패딩 */
+    box-sizing: border-box; /* 패딩이 전체 너비를 늘리지 않도록 설정 */
+    border-bottom-left-radius: 10px; /* 박스의 하단 둥근 모서리 유지 */
+    border-bottom-right-radius: 10px;
+}
+
+.title-text {
+    color: white;
+    font-size: 14px;
+    white-space: nowrap; /* 제목이 한 줄로 표시되게 함 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 제목이 길면 ...으로 표시 */
+}
+
+/* --- 6. 디깅 파트 --- */
+.section-title6 {
+    font-size: 35px;
+    font-weight: bold;
+    margin-top: 50px;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid #ff9900; /* 주황색 밑줄로 강조 */
+    display: inline-block; /* 밑줄이 제목 너비에 맞게 표시되도록 */
+}
+
+.digging-content {
+    margin-top: 50px;
+}
+
+/* 선수 카드들을 Flexbox로 가로 배열하기 위한 래퍼 */
+.digging-card-wrapper {
+    display: flex;
+    justify-content: center; /* 카드들을 가운데로 모음 */
+    gap: 100px; /* 카드 사이 간격 */
+    margin-bottom: 30px; /* 카드와 하단 문구 사이 간격 */
+}
+
+/* 개별 선수 추천 카드 */
+.digging-card {
+    width: 300px; /* 카드 너비 */
+    height: 700px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 흰색 사각형 이미지가 들어갈 영역 */
+.card-image {
+    width: 100%;
+    background-image: linear-gradient(to bottom, #ff9900, black);
+    border: 1px solid #333; /* 테두리 (선택 사항) */
+    margin-bottom: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column; /* ⭐이미지(아이템)를 세로로 정렬하기 위한 컨테이너 방향 설정 */
+    justify-content: flex-end; /* ⭐아이템을 세로 축의 끝(하단)으로 밀어 넣음 */
+    align-items: center;
+    overflow: hidden;
+}
+
+.card-image img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 카드 하단의 문구 라벨 */
+.card-label {
+    font-size: 30px; /* 텍스트 크기 */
+    font-weight: bold;
+    color: #ff9900; /* 텍스트 색상 */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card-text {
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+}
+
+.card-href {
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+}
+
+/* '이런 선수는 어떠신가요?' 문구 */
+.digging-phrase {
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+    color: white; /* 텍스트 색상 */
+    margin-top: 100px; /* 상단 간격 */
+    margin-bottom: 100px;
+}
+
+/* goToTop */
+
+.goToTop {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #ff9900;
+    color: white;
+    font-size: 30px;
+    /* z-index: 99; */
+
+    /* 버튼 기본 스타일 초기화 */
+    border: none; /* 테두리 제거 */
+    outline: none; /* 버튼을 클릭하거나 탭(Tab) 키로 선택했을 때 나타나는 푸른색 혹은 검은색의 얇은 외곽선을 없앱니다. */
+    cursor: pointer;
+
+    /* 중앙 정렬의 끝판왕 Flex */
+    display: none;          /* 자바스크립트에서 flex로 바꿀 예정 */
+    align-items: center;    /* 세로 중앙 */
+    justify-content: center; /* 가로 중앙 */
+
+}
+
+.goToTop:hover {
+  background-color: #555; /*333 */
+}
+
+/* side-memo */
+.memo-open-btn {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 100px;
+    background-color: #ff9900;
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    writing-mode: vertical-lr;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+}
+
+.side-memo-window {
+    position: fixed;
+    right: -320px; /* 창 너비보다 더 밀어내기 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-memo-window.active {
+    right: 0;
+}
+
+.memo-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memo-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.memo-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검정 배경에 투명도 0.5 적용 */ /* color: #000000; opacity : 0.5; */
+}
+
+.memo-content textarea {
+    width: 100%;
+    height: 330px; /* 헤더 높이 제외한 적당한 높이 */
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    resize: none;
+
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+
+    /* 공책 줄무늬 디자인 (linear-gradient 사용) */
+    background: transparent; /* 배경은 부모의 rgba(0,0,0,0.5)를 따라감 */
+    background-image: linear-gradient(#555 1px, transparent 1px); /* 줄 색상 (#555) */
+    background-size: 100% 30px; /* 줄 간격 30px (line-height와 일치시켜야 함) */
+    background-attachment: local; /* 스크롤 시 줄무늬도 같이 이동 */
+}
+
+/* 스크롤바 디자인 */
+.memo-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+.memo-content textarea::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+
+/* --- 반응형 디자인 (화면이 좁아지면 2열로 변경) --- */
+@media (max-width: 900px) {
+    .card-wrapper {
+        /* overflow-x: scroll; 삭제 (이제 JS로 슬라이드) */
+        padding-bottom: 0px;
+        justify-content: center; /* 모바일에서도 중앙 정렬 유지 */
+    }
+    .slide-button {
+        /* 모바일에서도 화살표 표시 */
+        display: block;
+        font-size: 20px;
+        padding: 10px 7px;
+    }
+}

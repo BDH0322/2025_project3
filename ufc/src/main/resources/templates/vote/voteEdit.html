@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${vote.title}">글 수정</title>
+    <link rel="stylesheet" th:href="@{/css/predictAI.css}">
+    <link rel="stylesheet" th:href="@{/css/voteWrite.css}">
+</head>
+<body>
+<div class="container">
+    <header class="form-header">
+        <h1>🗳️ 운영자 투표 생성</h1>
+        <p>대회 넘버링과 체급을 선택하여 투표 게시글을 작성하세요.</p>
+    </header>
+
+    <section class="write-box">
+        <form th:action="@{'/vote/voteUpdate/' + ${vote.boardNum}}" method="post" enctype="multipart/form-data">
+            <div class="input-section">
+                <div class="input-group half">
+                    <label for="fightNum">UFC 대회 번호</label>
+                    <input type="number" id="fightNum" name="fightNum" th:value="${vote.fightNum}" required>
+                </div>
+                <div class="input-group full">
+                    <label for="rawTitle">게시글 제목</label>
+                    <input type="text" id="rawTitle" name="title" th:value="${vote.title}" required>
+                </div>
+            </div>
+
+            <div class="input-group file-upload-group">
+                <label for="voteImage">대표 이미지 첨부</label>
+                <div class="file-custom-area">
+                    <input type="file" id="voteImage" name="voteImage" accept="image/*" onchange="previewImage(this)">
+                    <p class="file-hint">이미지 파일을 선택하거나 드래그하세요. (jpg, png, webp)</p>
+                </div>
+
+                <input type="hidden" id="originalFighter1" th:value="${vote.fighter1Name}">
+                <input type="hidden" id="originalFighter2" th:value="${vote.fighter2Name}">
+                <div id="imagePreviewContainer"th:style="${vote.voteImagePath != null ? 'display: block;' : 'display: none;'}">
+                    <img id="imagePreview"
+                         th:src="${vote.voteImagePath != null ? vote.voteImagePath : ''}"
+                         alt="미리보기">
+                    <button type="button" class="btn-remove-img" onclick="removeImage()">삭제</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="content">상세 내용 분석</label>
+                <textarea id="content" name="content" rows="8" th:text="${vote.content}"></textarea>
+            </div>
+
+            <hr class="divider">
+
+
+
+            <div class="vote-setup-container">
+                <th:block th:if="${vote.closed}">
+                    <input type="hidden" name="weightClass" th:value="${vote.weightClass}">
+                    <input type="hidden" name="fighter1Name" th:value="${vote.fighter1Name}">
+                    <input type="hidden" name="fighter2Name" th:value="${vote.fighter2Name}">
+                </th:block>
+
+                <h3>📊 투표 대상 설정</h3>
+
+                <div class="input-group">
+                    <label>체급 선택</label>
+                    <select id="weightClass" name="weightClass" th:disabled="${vote.closed}" required>
+                        <option value="" disabled>--- 체급 선택 ---</option>
+                        <option value="Featherweight" th:selected="${vote.weightClass == 'Featherweight'}">Featherweight (페더급)</option>
+                        <option value="Lightweight" th:selected="${vote.weightClass == 'Lightweight'}">Lightweight (라이트급)</option>
+                        <option value="Welterweight" th:selected="${vote.weightClass == 'Welterweight'}">Welterweight (웰터급)</option>
+                        <option value="Middleweight" th:selected="${vote.weightClass == 'Middleweight'}">Middleweight (미들급)</option>
+                        <option value="Light Heavyweight" th:selected="${vote.weightClass == 'Light Heavyweight'}">Light Heavyweight (라이트헤비급)</option>
+                        <option value="Heavyweight" th:selected="${vote.weightClass == 'Heavyweight'}">Heavyweight (헤비급)</option>
+                    </select>
+                </div>
+
+                <div class="fighter-select-wrapper">
+                    <div class="fighter-box blue">
+                        <span class="label">FIGHTER 1 (BLUE)</span>
+                        <select id="fighter1" name="fighter1Name" disabled required>
+                            <option value="">체급을 먼저 선택하세요</option>
+                        </select>
+                    </div>
+
+                    <div class="vs-circle">VS</div>
+
+                    <div class="fighter-box red">
+                        <span class="label">FIGHTER 2 (RED)</span>
+                        <select id="fighter2" name="fighter2Name" disabled required>
+                            <option value="">체급을 먼저 선택하세요</option>
+                        </select>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn-cancel" th:onclick="|location.href='vote/${vote.boardNum}'|">취소</button>
+                <button type="submit" class="btn-submit" style="background-color: #ffc107; color: #000;">수정 완료</button>
+                <a th:href="@{'/vote/voteDelete/' + ${vote.boardNum}}"
+                   class="btn-delete-link"
+                   onclick="return confirm('정말로 삭제하시겠습니까? 관련 데이터가 모두 삭제됩니다.');">게시글 삭제</a>
+            </div>
+        </form>
+    </section>
+</div>
+
+<script th:src="@{/js/vote_write.js}"></script>
+</body>
+</html>

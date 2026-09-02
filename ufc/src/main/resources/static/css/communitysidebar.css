@@ -1,0 +1,43 @@
+.sidebar-section {
+    width: 250px; /* 고정된 너비 */
+    flex-shrink: 0;
+    background-color: var(--color-sidebar-bg);
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.sidebar-section ul {
+    list-style: none; /* 리스트 마커(점) 제거 */
+    padding: 0;      /* 브라우저 기본 왼쪽 패딩 초기화 */
+    margin: 0;       /* 기본 상하 마진 초기화 */
+}
+
+.community-title {
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+
+.sidebar-item {
+    display: block;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    padding: 8px 30px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    text-decoration: none;
+}
+.sidebar-item:hover {
+    background-color: #2c2c2c;
+}
+.sidebar-item-active {
+    background-color: var(--color-active-bg);
+    color: var(--color-text-primary);
+}
+.sidebar-title{
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    padding: 10px 20px;
+    font-weight: bold;
+}

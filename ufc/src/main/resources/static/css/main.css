@@ -1,0 +1,353 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* 패딩과 보더가 너비/높이에 포함되도록 설정 */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: white;
+    background-color: #000000;
+}
+
+/* 메인 콘텐츠 영역 설정 */
+.main-container { /* main-content-area main-content*/
+    min-height: calc(100vh - 60px); /* 100vh에서 헤더 높이(가정 60px)를 뺀 높이 */
+    background-color: #000000;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; /* 요소를 수직으로 배치 */
+    align-items: center; /* 중앙 정렬 (가로축) */
+    padding-top: 150px; /* 헤더 아래 여백 */
+}
+
+/* --- 1. 로고 영역 --- */
+.main-content-logo { /* main-content-logo main-logo-section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    /* (만약 이미지가 없고 텍스트만 있다면) */
+}
+.main-content-logo-image { /* main-content-logo-image main-logo-image */
+      width: 280px;            /* 로고 크기 적절히 조절 */
+          height: auto;
+          display: block;
+          margin: 0 auto 20px;     /* 중앙 정렬 및 아래쪽 간격 */
+
+          /* 핵심 설정: 밝은 배경색을 투명하게 처리하여 검은 배경과 합성합니다 */
+              mix-blend-mode: screen;
+
+              /* 혹시 격자가 미세하게 남는다면 밝기를 조금 높여서 완전히 날려버립니다 */
+              filter: brightness(1.1) contrast(1.1);
+}
+.main-content-logo-text {
+    font-size: 2.5em;
+    color: #ffffff;
+    font-weight: bold;
+    margin: 0;
+}
+
+/* --- 2. 검색창 영역 --- */
+.main-content-search { /* main-content main-search-container */
+    display: flex;
+    width: 50%; /* 검색창 너비 조정 */
+    max-width: 600px;
+    margin-bottom: 40px; /* 순위 목록과의 여백 */
+}
+.main-content-search-input {
+    flex-grow: 1; /* 검색창이 가능한 공간을 채우도록 */
+    padding: 15px 20px;
+    font-size: 1em;
+    border: 3px solid #ff9900; /* 오렌지색 테두리 */
+    border-right: none;
+    border-radius: 8px 0 0 8px; /* 왼쪽 모서리만 둥글게 */
+    outline: none;
+    background-color: #333333; /* 어두운 배경 */
+    color: #ffffff;
+}
+.main-content-search-button {
+    padding: 15px 20px;
+    font-size: 1em;
+    background-color: #ff9900; /* 오렌지색 버튼 */
+    color: #000000;
+    border: 3px solid #ff9900;
+    border-radius: 0 8px 8px 0; /* 오른쪽 모서리만 둥글게 */
+    cursor: pointer;
+    font-weight: bold;
+}
+.main-content-search-button:hover {
+    background-color: #e68a00;
+}
+
+/* --- 3. 실시간 인기 검색 선수 --- */
+.main-content-ranking {
+    width: 50%;
+    max-width: 400px;
+    text-align: center;
+    color: #ffffff;
+}
+.ranking-topic {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #ff9900; /* 타이틀은 강조색 */
+    border-bottom: 1px solid #333333;
+    padding-bottom: 10px;
+}
+.ranking-list {
+    list-style: none; /* 기본 숫자 목록 마커 제거 */
+    padding: 0;
+}
+.ranking-item {
+    display: flex;
+    justify-content: space-between; /* 양쪽 끝으로 정렬 */
+    padding: 10px 0;
+    font-size: 1.1em;
+    border-bottom: 1px dashed #222222;
+}
+
+/* 순위 변동 스타일 */
+.ranking-change {
+    font-weight: bold;
+    font-size: 0.9em;
+    min-width: 40px; /* 아이콘과 숫자가 들어갈 최소 너비 */
+    text-align: right;
+}
+.ranking-change.up {
+    color: #00cc00; /* 상승은 초록색 */
+}
+.ranking-change.down {
+    color: #cc0000; /* 하락은 빨간색 */
+}
+.ranking-change.no-change {
+    color: #888888; /* 변동 없음은 회색 */
+}
+
+/* --- 스크롤 시 나타나는 흰색 배경 영역 --- */
+.mainunder-container {
+    background-color: #ffffff; /* 흰색 배경 */
+    color: #333333; /* 텍스트는 어두운 색으로 설정 */
+    padding: 50px 10%; /* 상하좌우 여백 */
+    min-height: 800px; /* 콘텐츠가 적을 경우 스크롤이 되도록 최소 높이 지정 */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    padding: 50px 5%;
+}
+
+.mainunder-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: #ff9900; /* 타이틀 색상 유지 */
+}
+
+/* 컨테이너 1, 2, 3 박스 */
+.mainunder-category1, .mainunder-category2, .mainunder-category3, .mainunder-category4 {
+    /* margin-bottom: 0px; */
+    padding: 25px;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: #f9f9f9;
+    text-align: left;
+}
+
+.mainunder-category4 { /* 얘만 텍스트 중앙 정렬 */
+    margin-bottom: 0px;
+    padding: 25px;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+/* 제목 공통 */
+.mainunder-category1 h2, .mainunder-category2 h2, .mainunder-category3 h2 { /* 클래스명 없이도 적용 가능 */
+    text-align: center;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+    color: #ff9900;
+}
+
+/* 설명글 공통 */
+.description {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* 리스트 아이템 공통 (마진 줄이기 반영) */
+.item-cat1, .item-cat2, .item-cat3 {
+    border-bottom: 1px dashed #ddd;
+    transition: background-color 0.2s;
+}
+.item-cat1:hover, .item-cat2:hover, .item-cat3:hover {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+/* 링크 영역 공통 */
+.link-cat1, .link-cat2, .link-cat3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+    width: 100%;
+}
+
+/* --- [INDIVIDUAL] 카테고리별 개별 포인트 컬러/폰트 설정 --- */
+
+/* Category 1 전용 (체급별 순위) */
+.rank-num-cat1 {
+    color: #ff9900;
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+.name-cat1 {
+    font-weight: bold;
+}
+
+/* Category 2 전용 (인기 점수) */
+.pts-cat2 {
+    color: #e74c3c;
+    font-weight: bold;
+        }
+
+/* Category 3 전용 (게시글 좋아요) */
+.title-cat3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* 제목 너무 길면 ... 처리 */
+    max-width: 80%;
+}
+.badge-cat3 {
+    color: #e74c3c;
+    font-size: 0.9rem;
+}
+
+.goToTop {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #ff9900;
+    color: white;
+    font-size: 30px;
+    /* z-index: 99; */
+
+    /* 버튼 기본 스타일 초기화 */
+    border: none; /* 테두리 제거 */
+    outline: none; /* 버튼을 클릭하거나 탭(Tab) 키로 선택했을 때 나타나는 푸른색 혹은 검은색의 얇은 외곽선을 없앱니다. */
+    cursor: pointer;
+
+    /* 중앙 정렬의 끝판왕 Flex */
+    display: none;          /* 자바스크립트에서 flex로 바꿀 예정 */
+    align-items: center;    /* 세로 중앙 */
+    justify-content: center; /* 가로 중앙 */
+
+}
+
+.goToTop:hover {
+  background-color: #555; /*333 */
+}
+
+/* side-memo */
+.memo-open-btn {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 100px;
+    background-color: #ff9900;
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    writing-mode: vertical-lr;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+}
+
+.side-memo-window {
+    position: fixed;
+    right: -320px; /* 창 너비보다 더 밀어내기 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-memo-window.active {
+    right: 0;
+}
+
+.memo-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memo-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.memo-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검정 배경에 투명도 0.5 적용 */ /* color: #000000; opacity : 0.5; */
+}
+
+.memo-content textarea {
+    width: 100%;
+    height: 330px; /* 헤더 높이 제외한 적당한 높이 */
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    resize: none;
+
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+
+    /* 공책 줄무늬 디자인 (linear-gradient 사용) */
+    background: transparent; /* 배경은 부모의 rgba(0,0,0,0.5)를 따라감 */
+    background-image: linear-gradient(#555 1px, transparent 1px); /* 줄 색상 (#555) */
+    background-size: 100% 30px; /* 줄 간격 30px (line-height와 일치시켜야 함) */
+    background-attachment: local; /* 스크롤 시 줄무늬도 같이 이동 */
+}
+
+/* 스크롤바 디자인 */
+.memo-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+.memo-content textarea::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .secondary-content-area {
+        grid-template-columns: 1fr;
+        padding: 30px 5%;
+    }
+}

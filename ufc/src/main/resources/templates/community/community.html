@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>문화를 공유하세요</title>
+    <link rel="stylesheet" th:href="@{/css/community.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script defer th:src="@{/js/community.js}"> </script>
+</head>
+<body>
+<header th:replace="~{/layout/header::header}"></header>
+
+<h2 class="community-page-title">커뮤니티</h2>
+<div class="main-content-wrapper">
+
+    <main class="content4_community">
+
+        <section class="sidebar-section">
+            <ul>
+                <li class="community-title">게시판</li>
+                <li><a th:href="@{/community}" class="sidebar-item">-전체 글 보기</a></li>
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-인기글</a></li>-->
+                <li><a th:href="@{/community(category=10000)}" class="sidebar-item">-자유 게시판</a></li>
+                <li><a th:href="@{/community(category=1000)}" class="sidebar-item">-페더급 게시판</a></li>
+                <li><a th:href="@{/community(category=2000)}" class="sidebar-item">-라이트급 게시판</a></li>
+                <li><a th:href="@{/community(category=3000)}" class="sidebar-item">-웰터급 게시판</a></li>
+                <li><a th:href="@{/community(category=4000)}" class="sidebar-item">-미들급 게시판</a></li>
+                <li><a th:href="@{/community(category=5000)}" class="sidebar-item">-라이트 헤비급 게시판</a></li>
+                <li><a th:href="@{/community(category=6000)}" class="sidebar-item">-헤비급 게시판</a></li>
+                <li><a th:href="@{/community(category=7000)}" class="sidebar-item">-유저투표 게시판</a></li>
+                <li><a th:href="@{/community(category=8000)}" class="sidebar-item">-공지</a></li>
+            </ul>
+
+<!--            <ul>-->
+<!--                <li class="sidebar-title">최근 방문 게시판</li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-헤비급 게시판</a></li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-라이트급 게시판</a></li>-->
+<!--                <li><a th:href="@{/community}" class="sidebar-item">-미들급 게시판</a></li>-->
+<!--            </ul>-->
+        </section>
+
+
+        <section class="board-section">
+            <table class="board-table"> <!-- 게시판 테이블 -->
+                <thead>
+                <tr> <!-- 게시판 컬럼 -->
+                    <th>게시판</th>
+                    <th>닉네임</th>
+                    <th>제목</th>
+                    <th>작성일</th>
+                    <th>추천</th>
+                    <th>조회수</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                    <tr class="cursor-pointer"
+                        th:each="post : ${list}"
+                        th:classappend="${post.communityIsNotice == 1} ? 'notice-row' : ''"
+                        th:onclick="|location.href='@{/community/communitypost(communityContentNumber=${post.communityContentNumber})}'|">
+
+                        <td class="board-cell-category">
+                                    <span th:if="${post.communityIsNotice == 1}" class="badge-notice">공지</span>
+                                    <span th:unless="${post.communityIsNotice == 1}">
+                                    <span th:switch="${post.communityCategory}">
+                                        <span th:case="10000">자유게시판</span>
+                                        <span th:case="1000">페더급</span>
+                                        <span th:case="2000">라이트급</span>
+                                        <span th:case="3000">웰터급</span>
+                                        <span th:case="4000">미들급</span>
+                                        <span th:case="5000">라이트헤비급</span>
+                                        <span th:case="6000">헤비급</span>
+                                        <span th:case="7000">유저투표</span>
+                                        <span th:case="8000">공지</span>
+                                    </span>
+                                    </span>
+                        </td> <!-- 체급 -->
+
+                        <!-- 게시판 데이터(게시글) -->
+                        <td class="board-cell-id">
+                            <span th:if="${post.admin == 1}"
+                                    th:classappend="${post.admin == 1} ? 'admin-color' : 'username-text'"
+                                  th:text="${post.admin == 1} ? '🛡️ ' + ${post.id} : ${post.id}">
+                            </span>
+                            <span class="username-text" th:text="${post.id}" th:if="${post.admin != 1}"></span>
+
+                            <div class="user-popup">
+                                <h3 th:text="${post.id}" th:classappend="${post.admin == 1} ? 'admin-color' : ''"></h3>
+                                <button class="btn-view-post">작성글 보기</button>
+                                <button class="btn-ban-user">글쓰기 제한하기</button>
+                                <button class="btn-close-popup">닫기</button>
+                            </div>
+                        </td> <!-- 작성글 제한 + 작성글 모아보기, 어드민 or 일반유저 기능 구분 -->
+
+                        <td class="board-cell-title">
+                            <a th:if="${post.communityHidden == 1 and admin == 1}"
+                               th:href="@{/community/communitypost(communityContentNumber=${post.communityContentNumber})}">
+                                <span th:text="${post.communityTitle}"></span>
+                                <span class="board-cell-comment-count" th:text="'(' + ${post.communityCommentCount} + ')'"></span>
+                            </a>
+
+                            <span th:if="${post.communityHidden == 1 and admin != 1}"
+                                  th:text="${post.communityTitle}">
+                            </span>
+
+                            <a th:if="${post.communityHidden != 1}"
+                               th:href="@{/community/communitypost(communityContentNumber=${post.communityContentNumber})}">
+                                <span th:text="${post.communityTitle}"></span>
+                                <span th:if="${post.communityCommentCount > 0}"
+                                      th:text="'(' + ${post.communityCommentCount} + ')'"></span>
+                            </a>
+                        </td> <!-- 제목(댓글 수) -->
+                        <td class="board-cell-date" th:text="${#temporals.format(post.communityWriteTime, 'yyyy.MM.dd')}"></td> <!-- 작성일 -->
+                        <td class="board-cell-communityLike" th:text="${post.communityLike}"></td> <!-- 추천 수 -->
+                        <td class="board-cell-viewCount" th:text="${post.communityViewCount}"></td> <!-- 조회수 -->
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="paging-container">
+                <ul class="pagination">
+                    <li th:class="${list.first} ? 'disabled'">
+                        <a th:href="@{/community(page=0, searchType=${searchType}, keyword=${keyword})}">«</a>
+                    </li>
+                    <li th:class="${list.first} ? 'disabled'">
+                        <a th:href="${list.first} ? '#' : @{/community(page=${list.number - 1}, searchType=${searchType}, keyword=${keyword})}">이전</a>
+                    </li>
+
+                    <li th:each="i : ${#numbers.sequence(startPage, endPage)}" th:class="${i == list.number} ? 'active' : ''">
+                        <a th:href="@{/community(page=${i}, searchType=${searchType}, keyword=${keyword})}" th:text="${i + 1}"></a>
+                    </li>
+
+                    <li th:class="${list.last} ? 'disabled'">
+                        <a th:href="${list.last} ? '#' : @{/community(page=${list.number + 1}, searchType=${searchType}, keyword=${keyword})}">다음</a>
+                    </li>
+                    <li th:class="${list.last} ? 'disabled'">
+                        <a th:href="@{/community(page=${list.totalPages - 1}, searchType=${searchType}, keyword=${keyword})}">»</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-controls-row">
+                <div class="search-and-write-container">
+                    <section class="board-search-section">
+                        <form action="/community/communitysearch" method="get" class="search-form">
+
+                            <select name="searchType" class="search-select">
+                                <option value="communityTitle" th:selected="${searchType == 'communityTitle'}">제목</option>
+                                <option value="communityContent" th:selected="${searchType == 'communityContent'}">내용</option>
+                                <option value="id"
+                                        th:selected="${searchType == 'id'}"
+                                        th:if="${admin != 1}">일반 유저
+                                </option>
+                                <option value="id"
+                                        th:selected="${searchType == 'id'}"
+                                        th:if="${admin == 1}" class="admin-color">어드민
+                                </option>
+                            </select>
+
+                            <input type="text"
+                                   name="keyword"
+                                   class="search-input"
+                                   placeholder="검색어를 입력하세요"
+                                   th:value="${keyword}"> <button type="submit" class="search-btn">
+                            🔍
+                        </button>
+                        </form>
+                    </section>
+                </div>
+
+                <a class="board-write-btn" th:href="${banned} ? 'javascript:alert(\'게시글 작성 제제기간입니다.\')' : @{/community/communitywrite}">글 쓰기</a>
+
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+    <div id="side-memo" class="side-memo-window">
+        <div class="memo-header">
+            <h3>Quick Memo</h3>
+            <button type="button" id="closeMemoBtn">X</button>
+        </div>
+        <div class="memo-content">
+            <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+        </div>
+    </div>
+
+<footer th:replace="~{/layout/footer::footer}"></footer>
+</body>
+
+</html>

@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>트렌드</title>
+    <link rel="stylesheet" th:href="@{/css/trend.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script th:src="@{/js/trend.js}"></script>
+</head>
+<body>
+    <header th:replace="~{layout/header::header}"></header>
+
+<main class="content2_trend">
+
+    <section class="highlight-section">
+        <h2 class="highlight-title">>🔥🔥🔥이 달의 하이라이트🔥🔥🔥</h2>
+        <div class="highlight-grid">
+            <div class="highlight-item"> <!-- width="560" height="315"  -->
+                <iframe src="https://www.youtube.com/embed/h_auGwiEfGo?si=8RY9Cc6Ih_wIL0Fr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="highlight-item">
+                <iframe src="https://www.youtube.com/embed/u6Q4rTRiZsg?si=8ZuauvsubXMeYqvd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="highlight-item">
+                <iframe src="https://www.youtube.com/embed/6hY73iRQeWc?si=hffXSNpabD7JaSXb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <div class="highlight-item">
+                <iframe src="https://www.youtube.com/embed/U30qDyI84ks?si=zPRQh25bwdu-jtAf" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+        </div>
+        <a href="/highlights/more" class="highlight-more-link">더보기</a>
+    </section>
+
+    <section class="schedule-section">
+        <h2 class="schedule-title">오늘 경기 일정📅</h2>
+        <div class="schedule-list">
+
+            <div class="schedule-match">
+                <div class="schedule-match-visual">
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/light/HOLLOWAY_MAX_L_BMF_BELT_07-19.png}">
+                    </div>
+                    <span class="vs-text">VS</span>
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/light/OLIVEIRA_CHARLES_L_10-11.png}">
+                    </div>
+                </div>
+                <div class="schedule-match-name">
+                    맥스 할로웨이
+                </div>
+                <span class="vs-text">VS</span>
+                <div class="schedule-match-name">
+                    찰스 올리베이라
+                </div>
+            </div>
+
+            <div class="schedule-match">
+                <div class="schedule-match-visual">
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/middle/STRICKLAND_SEAN_L_06-01.png}">
+                    </div>
+                    <span class="vs-text">VS</span>
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/middle/HERNANDEZ_ANTHONY_L_10-19.png}">
+                    </div>
+                </div>
+                <div class="schedule-match-name">
+                    션 스트릭랜드
+                </div>
+                <span class="vs-text">VS</span>
+                <div class="schedule-match-name">
+                    앤소니 에르난데스
+                </div>
+            </div>
+
+            <div class="schedule-match">
+                <div class="schedule-match-visual">
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/feather/VOLKANOVSKI_ALEXANDER_L_BELT_02-17.png}">
+                    </div>
+                    <span class="vs-text">VS</span>
+                    <div class="schedule-fighter-box">
+                        <img th:src="@{/images/fighter/feather/LOPES_DIEGO_L_09-13.png}">
+                    </div>
+                </div>
+                <div class="schedule-match-name">
+                    알렉산더 볼카노프스키
+                </div>
+                <span class="vs-text">VS</span>
+                <div class="schedule-match-name">
+                    디에고 로페스
+                </div>
+            </div>
+        </div>
+            <a href="#" class="schedule-more-link">더보기</a>
+    </section>
+
+    <section class="statistic-section">
+        <h2 class="statistic-title">> 통계📊</h2>
+
+        <div class="slider-wrapper">
+            <div class="statistic-container">
+
+                <div class="statistic-page" id="page-wins" >
+                    <div class="page-group">
+                        <div class="group-card" th:each="hotFighters:${hotFighters}"> <!-- 이 점수는 공격력과 피니시 능력을 중시하여, 경기를 흥미롭게 만드는 선수를 평가합니다. -->
+                            <div class="card-player">
+                                <img th:src="${hotFighters.imageUrl}" alt="선수 이미지">
+                                <div class="player-info">
+                                    <div class="player-detail" th:text="${hotFighters.weightClass}">체급:<br></div>
+                                    <div class="player-detail" th:text="${hotFighters.totalWins} + 'W / ' + ${hotFighters.koTko} + 'K / ' + ${hotFighters.totalLosses} + 'L'"><br></div>
+                                    <div class="player-detail">피지컬 정보 후첨 예정</div>
+                                </div>
+                            </div>
+                            <div class="player-name">
+                                <a th:href="@{/fighter/{name}(name=${hotFighters.name})}" th:text="${hotFighters.name}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-label">핫 한 선수(호전성과 피니쉬가 좋은 선수)</div>
+                </div>
+
+                <div class="statistic-page" id="page-money">
+                    <div class="page-group">
+                        <div class="group-card" th:each="starFighters:${starFighters}"> <!-- 이 점수는 그래플링과 서브미션 능력을 중시하여, 전술적이고 떠오르는 잠재력을 가진 선수를 평가합니다. -->
+                            <div class="card-player">
+                                <img th:src="${starFighters.imageUrl}" alt="선수 이미지">
+                                <div class="player-info">
+                                    <div class="player-detail" th:text="${starFighters.weightClass}">체급:<br></div>
+                                    <div class="player-detail" th:text="${starFighters.totalWins} + 'W / ' + ${starFighters.koTko} + 'K / ' + ${starFighters.totalLosses} + 'L'"><br></div>
+                                    <div class="player-detail">피지컬 정보 후첨 예정</div>
+                                </div>
+                            </div>
+                            <div class="player-name">
+                                <a th:href="@{/fighter/{name}(name=${starFighters.name})}" th:text="${starFighters.name}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-label">차세대(전적 대비 승리가 많은 선수)</div>
+                </div>
+
+                <div class="statistic-page" id="page-watchlist" >
+                    <div class="page-group">
+                        <div class="group-card" th:each="alertFighters:${alertFighters}"> <!-- 이 점수는 방어적인 약점이나 경기 경험 부족을 나타내는 지표를 중시하여, 현재 위험에 처해 있거나 패배율이 높은 선수를 평가합니다. (점수가 낮을수록 위험합니다.) -->
+                            <div class="card-player">
+                                <img th:src="${alertFighters.imageUrl}" alt="선수 이미지">
+                                <div class="player-info">
+                                    <div class="player-detail" th:text="${alertFighters.weightClass}">체급:<br></div>
+                                    <div class="player-detail" th:text="${alertFighters.totalWins} + 'W / ' + ${alertFighters.koTko} + 'K / ' + ${alertFighters.totalLosses} + 'L'"><br></div>
+                                    <div class="player-detail">피지컬 정보 후첨 예정</div>
+                                </div>
+                            </div>
+                            <div class="player-name">
+                                <a th:href="@{/fighter/{name}(name=${alertFighters.name})}" th:text="${alertFighters.name}"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="group-label">불효자(성적 부진자)</div>
+                </div>
+            </div>
+
+            <div class="statistic-dots" id="StatisticDots"></div>
+            <button class="slide-button prev-button" id="prevSlide"><</button>
+            <button class="slide-button next-button" id="nextSlide">></button>
+        </div>
+    </section>
+
+    <h2 class="section-title4">> 지금 핫 한 선수👴</h2>
+
+    <section class="hot-fighter-section">
+
+        <div class="hot-fighter-slide">
+            <div class="slide-page-bundle">
+
+                <div class="slide-page" data-index="0">
+                    <div class="page-container" th:if="${not #lists.isEmpty(heavyChamp)}" th:with="heavyChamp=${heavyChamp[0]}">
+
+                        <img th:src="${heavyChamp.imageUrl}"
+                             th:alt="${heavyChamp.name}"
+                             class="fighter-photo">
+
+                        <div class="history-box">
+                            <h3 class="fighter-name" th:text="${heavyChamp.name}"></h3>
+                            <div class="info-group">
+                                <span class="info-label">체급 :</span>
+                                <span class="info-value" th:text="${heavyChamp.weightClass}"></span>
+                                <span class="info-result" th:text="'랭크: ' + ${heavyChamp.rankNum}"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record"
+                                      th:text="'전적:' + ${heavyChamp.totalWins} + 'W / ' + ${heavyChamp.koTko} + 'K / ' + ${heavyChamp.totalLosses} + 'L'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'평균 경기시간: ' + ${heavyChamp.avgTime}"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'피지컬: ' + ${heavyChamp.height} + 'cm' + ${heavyChamp.weight} + 'kg' + ${heavyChamp.reach} + 'cm'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'적중률: ' + 'SLPM: ' + ${heavyChamp.slpm} + ' / TD Acc: ' + ${heavyChamp.tdAcc} + '%'"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-label">지구에서 가장 강한 인간</div>
+                </div>
+
+
+                <div class="slide-page" data-index="1">
+                    <div class="page-container" th:if="${not #lists.isEmpty(hotIssue)}" th:with="fighter=${hotIssue[0]}">
+
+                        <img th:src="${fighter.imageUrl}"
+                             th:alt="${fighter.name}"
+                             class="fighter-photo">
+
+                        <div class="history-box">
+                            <h3 class="fighter-name" th:text="${fighter.name}"></h3>
+                            <div class="info-group">
+                                <span class="info-label">체급:</span>
+                                <span class="info-value" th:text="${fighter.weightClass}"></span>
+                                <span class="info-result" th:text="'승률 : ' + ${#numbers.formatDecimal((fighter.totalWins * 1.0 / fighter.total), 1, 2)} + '%'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record"
+                                      th:text="'전적 :' +${fighter.totalWins} + 'W / ' + ${fighter.totalLosses} + 'L (' + ${fighter.total} + '경기)'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record"
+                                      th:text="'KO/SUB 승리 :' + ${fighter.koTko} + 'KO / ' + ${fighter.subWins} + 'SUB'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'적중률 :' + 'SLPM: ' + ${fighter.slpm} + ' / TD Acc: ' + ${fighter.tdAcc} + '%'"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-label">핫 이슈 선수</div>
+                </div>
+
+
+                <div class="slide-page" data-index="2">
+                    <div class="page-container" th:if="${not #lists.isEmpty(risingStar)}" th:with="fighter=${risingStar[0]}">
+
+                        <img th:src="${fighter.imageUrl}"
+                             th:alt="${fighter.name}"
+                             class="fighter-photo">
+
+                        <div class="history-box">
+                            <h3 class="fighter-name" th:text="${fighter.name}"></h3>
+                            <div class="info-group">
+                                <span class="info-label">체급:</span>
+                                <span class="info-value" th:text="${fighter.weightClass}"></span>
+                                <span class="info-result" th:text="'총 경기수: ' + ${fighter.total}"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record"
+                                      th:text="'승률 :' + ${#numbers.formatDecimal((fighter.totalWins * 1.0 / fighter.total), 1, 2)} + '%'"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'점유율:' + 'TD Avg: ' + ${fighter.tdAvg} + ' / Sub Avg: ' + ${fighter.subAvg}"></span>
+                            </div>
+
+                            <div class="info-group">
+                                <span class="info-record" th:text="'적중률:' + 'SLPM: ' + ${fighter.slpm} + ' / TD Acc: ' + ${fighter.tdAcc} + '%'"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page-label">떠오르는 별</div>
+                </div>
+
+            </div>
+            <button class="slide-button hot-prev-button"><</button>
+            <button class="slide-button hot-next-button">></button>
+            <div class="hot-pagination-dots" id="HotDot"></div>
+
+        </div>
+
+    </section>
+
+    <section class="trash-talk-section">
+        <h2 class="section-title5">> 🗑️트래쉬 토크-!</h2>
+
+        <div class="trash-talk-container">
+
+            <div class="trash-left-section">
+                <div class="trash-box-large">
+                    <div class="video-container">
+                        <iframe width=700px; height=440px; src="https://www.youtube.com/embed/5jt0gh18j-Y?si=1PUP1Lr33k_ZiDtv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-title">
+                        <span class="title-text">[최고의 UFC 트래쉬 토크 🤬]</span>
+                    </div>
+                </div>
+
+                <div class="trash-box-bundle">
+                    <div class="trash-box-middle">
+                        <div class="video-container">
+                            <iframe width=320px; height=260px; src="https://www.youtube.com/embed/Aty85JCGv40?si=5_1w8smNa6NKxuOt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-title">
+                            <span class="title-text">[Conor McGregor’s best trash talk | ESPN]</span>
+                        </div>
+                    </div>
+
+                    <div class="trash-box-middle">
+                        <div class="video-container">
+                            <iframe width=320px; height=260px; src="https://www.youtube.com/embed/EUdqBtvodvQ?si=WhNO1PZ7g-G6cmo2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-title">
+                            <span class="title-text">[진짜로 때리는 스트릭랜드]</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="trash-box-bundle">
+                    <div class="trash-box-middle">
+                        <div class="video-container">
+                            <iframe width=320px; height=260px; src="https://www.youtube.com/embed/G9u0tJOU7UQ?si=g5i9fgePDCkmQavB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-title">
+                            <span class="title-text">[치마예프 발음 놀리는 길버트 번즈]</span>
+                        </div>
+                    </div>
+
+                    <div class="trash-box-middle">
+                        <div class="video-container">
+                            <iframe width=320px; height=260px; src="https://www.youtube.com/embed/6oIcdrCatJI?si=46SSx7FvOq7N5oX8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                        <div class="video-title">
+                            <span class="title-text">[션 스트릭랜드 기자회견 레전드ㅋㅋ]</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="trash-right-section">
+
+                <div class="trash-box-shorts">
+                    <div class="video-container">
+                        <iframe width="100%" height="100%"
+                                src="https://www.youtube.com/embed/SOwS4SrgHBU"
+                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-title">
+                        <span class="title-text">[#shorts 다짜고짜 욕박는 매미킴 🥵]</span>
+                    </div>
+                </div>
+
+                <div class="trash-box-middle">
+                    <div class="video-container">
+                        <iframe width="100%" height="100%"
+                                src="https://www.youtube.com/embed/GNaW-5MS1PU"
+                                title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="video-title">
+                        <span class="title-text">[#shorts 아데산야한테 N워드 써보기]</span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="digging-section">
+        <h2 class="section-title6">> 디깅🔥</h2>
+
+        <div class="digging-content">
+            <div class="digging-card-wrapper">
+
+                <div class="digging-card" th:each="digging : ${digging}">
+
+                    <div th:with="fighter=${digging.fighter}, criteriaName=${digging.criteriaName}">
+
+                        <div class="card-image">
+                            <h3 class="card-text">
+                                <span th:if="${criteriaName == '속전속결'}">
+                                    <span th:text="${#numbers.formatDecimal(fighter.avgTime, 1, 2) + '초'}"></span>
+                                    (평균 경기 시간)
+                                </span>
+
+                                <span th:if="${criteriaName == '예절 주입기' or criteriaName == '스턴건'}">
+                                    <span th:text="${fighter.koTko} + '회'"></span>
+                                    (KO/TKO 승리)
+                                </span>
+
+                                <span th:if="${criteriaName == '빠른 손'}">
+                                    <span th:text="${#numbers.formatDecimal(fighter.slpm, 1, 2)}"></span>
+                                    (분당 유효타 수)
+                                </span>
+
+                                <span th:if="${criteriaName == '마조히스트'}">
+                                    <span th:text="${#numbers.formatDecimal(fighter.sapm, 1, 2)}"></span>
+                                    (분당 피격 수)
+                                </span>
+
+                                <span th:if="${criteriaName == '대걸레'}">
+                                    <span th:text="${#numbers.formatDecimal(fighter.tdAcc, 0, 0) + '%'}"></span>
+                                    (테이크다운 성공률)
+                                </span>
+
+                                <span th:if="${criteriaName == '모범생' or criteriaName == '양아치'}">
+                                     <span th:with="winRate=${fighter.total > 0 ? (fighter.totalWins * 1.0 / fighter.total) * 100 : 0}">
+                                        <span th:text="${#numbers.formatDecimal(winRate, 0, 1) + '%'}"></span>
+                                    </span>
+                                    (승률)
+                                </span>
+                            </h3>
+
+                            <h3 class="card-href">
+                                <a th:href="@{fighter/{name}(name=${fighter.name})}" th:text="${fighter.name}"></a>
+                            </h3>
+
+                            <img th:src="${fighter.imageUrl}" th:alt="${fighter.name}">
+                        </div>
+
+                        <div class="card-label">
+                            <span th:text="${criteriaName}"></span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <p class="digging-phrase">이런 선수는 어떠신가요?</p>
+        </div>
+
+    </section>
+
+</main>
+
+    <button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+    <div id="side-memo" class="side-memo-window">
+        <div class="memo-header">
+            <h3>Quick Memo</h3>
+            <button type="button" id="closeMemoBtn">X</button>
+        </div>
+        <div class="memo-content">
+            <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+        </div>
+    </div>
+
+    <button type="button" id="goToTop" class="goToTop">▲</button>
+
+<footer th:replace="~{layout/footer::footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>글 쓰기</title>
+    <link rel="stylesheet" th:href="@{/css/communityWrite.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <script defer th:src="@{/js/communitywrite.js}"></script>
+</head>
+
+<body>
+    <header th:replace="~{layout/header::header}"></header>
+
+    <h2 class="community-write-title">게시글 작성</h2>
+    <div class="main-content-wrapper">
+
+        <main class="content4_community_write">
+
+            <section class="sidebar-section">
+                <ul>
+                    <li class="community-title">게시판</li>
+                    <li><a th:href="@{/community}" class="sidebar-item">-전체 글 보기</a></li>
+<!--                    <li><a th:href="@{/community}" class="sidebar-item">-인기글</a></li>-->
+                    <li><a th:href="@{/community(category=10000)}" class="sidebar-item">-자유 게시판</a></li>
+                    <li><a th:href="@{/community(category=1000)}" class="sidebar-item">-페더급 게시판</a></li>
+                    <li><a th:href="@{/community(category=2000)}" class="sidebar-item">-라이트급 게시판</a></li>
+                    <li><a th:href="@{/community(category=3000)}" class="sidebar-item">-웰터급 게시판</a></li>
+                    <li><a th:href="@{/community(category=4000)}" class="sidebar-item">-미들급 게시판</a></li>
+                    <li><a th:href="@{/community(category=5000)}" class="sidebar-item">-라이트 헤비급 게시판</a></li>
+                    <li><a th:href="@{/community(category=6000)}" class="sidebar-item">-헤비급 게시판</a></li>
+                    <li><a th:href="@{/community(category=7000)}" class="sidebar-item">-유저투표 게시판</a></li>
+                    <li><a th:href="@{/community(category=8000)}" class="sidebar-item" >-공지</a></li>
+                </ul>
+
+<!--                <ul>-->
+<!--                    <li class="sidebar-title">최근 방문 게시판</li>-->
+<!--                    <li><a th:href="@{/community}" class="sidebar-item">-헤비급 게시판</a></li>-->
+<!--                    <li><a th:href="@{/community}" class="sidebar-item">-라이트급 게시판</a></li>-->
+<!--                    <li><a th:href="@{/community}" class="sidebar-item">-미들급 게시판</a></li>-->
+<!--                </ul>-->
+            </section>
+
+            <section class="write-section">
+                <form action="/community/communityWriteSave" method="post" class="community-write-form" enctype="multipart/form-data">
+
+                    <div class="write-header-index1">
+                        <div class="write-category">
+                            <select id="communityCategory" name="communityCategory" class="write-category-select" required>
+                                <option value="">카테고리 선택</option>
+                                <option value="10000">자유 게시판</option>
+                                <option value="1000">페더급 게시판</option>
+                                <option value="2000">라이트급 게시판</option>
+                                <option value="3000">웰터급 게시판</option>
+                                <option value="4000">미들급 게시판</option>
+                                <option value="5000">라이트 헤비급 게시판</option>
+                                <option value="6000">헤비급 게시판</option>
+                                <option value="7000">유저투표 게시판</option>
+                                <option value="8000" th:if="${admin == 1}">공지</option>
+                            </select>
+                        </div>
+
+                        <div class="write-title">
+                            <input type="text" id="communityTitle" name="communityTitle" class="write-title-input" placeholder="제목을 입력하세요" required>
+                        </div>
+                    </div>
+
+                    <div class="write-content">
+                        <textarea id="communityContent" name="communityContent" class="write-content-input" rows="15" placeholder="내용을 입력하세요" required></textarea>
+                    </div>
+
+                    <div class="write-file">
+                        <input type="file" id="communityImage" name="communityimage" class="write-file-input" multiple>
+                    </div>
+
+                    <input type="hidden" name="id" th:value="${id}">
+<!--                    <input type="hidden" name="admin" th:value="${admin}"> 여기서 어드민 보내면 보이니까 백엔드에서 community.setadmin(...) 으로 보내주는게 좋음-->
+                    <div class="write-button-row">
+                        <button type="submit" class="board-write-btn">글쓰기</button>
+                        <a th:href="@{/community}" class="board-write-btn">취소</a>
+                        <span th:if="${admin != 1}" class="board-write-btn disabled">공지글 작성 권한 없음</span>
+                    </div>
+
+                </form>
+            </section>
+
+        </main>
+    </div>
+
+    <button type="button" id="openMemoBtn" class="memo-open-btn">MEMO</button>
+
+    <div id="side-memo" class="side-memo-window">
+        <div class="memo-header">
+            <h3>Quick Memo</h3>
+            <button type="button" id="closeMemoBtn">X</button>
+        </div>
+        <div class="memo-content">
+            <textarea id="memoInput" placeholder="여기에 메모하세요."></textarea>
+        </div>
+    </div>
+
+    <footer th:replace="~{layout/footer::footer}"></footer>
+</body>
+</html>

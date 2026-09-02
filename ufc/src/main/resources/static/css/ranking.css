@@ -1,0 +1,180 @@
+/* --- 1. 기본 및 공통 스타일 --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    /* 시스템 폰트 유지 및 가장 깊은 다크 배경 설정 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #E0E0E0; /* 기본 텍스트 색상: 부드러운 화이트 */
+    background-color: #0C0C0C; /* 가장 깊은 배경색 */
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+a { text-decoration: none; }
+
+/* --- 2. 메인 콘텐츠 영역 스타일 --- */
+
+.main-container {
+    background-color: #0C0C0C;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainunder-container {
+    background-color: #0C0C0C;
+    color: #E0E0E0;
+    padding: 70px 6%; /* 여백을 더 늘려 공간감 최대화 */
+    display: block;
+}
+
+.mainunder-container h1 {
+    font-size: 2.8em; /* 제목 강조 */
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 50px;
+    text-align: left;
+    /* 텍스트에 은은한 메탈릭 광택 효과 */
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+/* --- 3. 랭킹표 전용 스타일 (프리미엄 다크 카드 디자인) --- */
+
+/* A. 전체 랭킹표 레이아웃 */
+.all-ranking-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* 최소 너비 확장 */
+    gap: 35px; /* 카드 간격 확장 */
+    width: 100%;
+}
+
+.ranking-table-card {
+    /* 다크 모드 카드 스타일: 부드러운 모서리, 깊고 넓은 그림자 */
+    background-color: #1E1E1E;
+    border-radius: 20px; /* 더 둥근 모서리 */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* 깊고 무거운 그림자 */
+    padding: 30px 25px; /* 내부 패딩 증가 */
+    border: 1px solid #292929; /* 미묘한 경계선 */
+    transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s;
+}
+
+.ranking-table-card:hover {
+    transform: translateY(-5px); /* 호버 시 더욱 드라마틱하게 부양 */
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
+}
+
+/* B. 테이블 제목 및 디자인 */
+.ranking-division-title {
+    font-size: 1.7em;
+    font-weight: 600;
+    color: #FFFFFF;
+    padding-bottom: 5px;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px; /* 글자 간격 조정 */
+}
+
+.fighter-ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 1em;
+}
+
+.fighter-ranking-table thead th {
+    background-color: transparent;
+    color: #888888; /* 서브 텍스트는 차분한 회색 */
+    padding: 12px 0;
+    font-weight: 500;
+    border-bottom: 1px solid #333333; /* 어두운 구분선 */
+    text-transform: uppercase; /* 대문자 처리로 세련미 추가 */
+    font-size: 0.85em;
+    letter-spacing: 1px;
+}
+
+/* 챔피언 행 스타일 */
+.ranking-champion {
+    background-color: #2A2A2A; /* 챔피언 배경은 카드의 톤보다 약간 어둡게 */
+    font-weight: 700;
+    border-top: none;
+}
+
+.ranking-champion .rank-col {
+    color: #FFD700; /* 순금색으로 랭크 강조 */
+}
+
+.ranking-champion td {
+    border-bottom: 1px solid #FFD700 !important; /* 골드 구분선 */
+}
+
+
+/* 일반 랭커 행 스타일 */
+.fighter-ranking-table tbody tr {
+    border-bottom: 1px solid #282828; /* 어두운 로우 구분선 */
+    transition: background-color 0.15s;
+}
+
+.fighter-ranking-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.fighter-ranking-table tbody tr:hover {
+    background-color: #282828; /* 호버 시 미세한 색상 변화 */
+}
+
+/* C. 컬럼 및 챔피언 이미지 스타일 */
+.fighter-ranking-table td {
+    padding: 15px 0; /* 세로 패딩 증가 */
+    color: #E0E0E0;
+    vertical-align: middle;
+}
+
+.rank-col {
+    width: 15%;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.2em;
+    color: #A9A9A9;
+}
+
+.name-col-full {
+    width: 85%;
+    font-weight: 400;
+}
+
+.fighter-info {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* 간격 확대 */
+}
+
+.fighter-thumb {
+    /* 기존 스타일 유지 (예: width, height, border-radius 등) */
+    width: 40px;          /* 썸네일 크기 */
+    height: 40px;         /* 썸네일 크기 */
+    border-radius: 50%;   /* 원형 */
+    overflow: hidden;     /* 넘치는 이미지 영역 숨기기 */
+
+    /* 🌟🌟🌟 얼굴에 초점을 맞추는 핵심 CSS 🌟🌟🌟 */
+    object-fit: cover;
+
+    /* 이미지를 위쪽(top)으로 10% 정도 이동시켜 얼굴이 중앙에 오도록 조정 */
+    /* 필요에 따라 0% (가장 위), 20% 등으로 조정해 보세요. */
+    object-position: 50% 10%;
+
+    /* 파이터 이름과 수평 정렬을 위한 스타일 */
+    display: inline-block;
+    margin-right: 10px;
+}
+
+
+
+/* --- 4. 모바일 반응형 --- */
+@media (max-width: 1000px) {
+     .all-ranking-container {
+        grid-template-columns: 1fr;
+        gap: 25px;
+     }
+}

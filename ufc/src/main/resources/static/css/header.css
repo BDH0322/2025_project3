@@ -1,0 +1,238 @@
+.header-container {
+    display: flex; /* 요소들을 가로로 정렬 */
+    align-items: center; /* 수직 가운데 정렬 */
+    background-color: #000000; /* 네비게이션 바 배경색 */
+    height: 55px; /* 네비게이션 바 높이 설정 */
+    padding: 0 20px; /* 좌우 패딩 */
+    border-bottom: 2px solid #282828; /* 하단 구분선 */
+    box-sizing: border-box; /* 패딩이 높이에 영향을 주지 않도록 설정 */
+}
+
+/* 로고/도메인 영역 스타일 */
+.header-logo { /* header-logo logo-area */
+   margin-right: 30px;   /* 메뉴와의 간격 살짝 조정 */
+        display: flex;        /* 로고 내부 정렬을 위해 flex 적용 */
+        align-items: center;  /* 수직 가운데 정렬 */
+          /* 부모 높이(55px)를 따라감 */
+}
+
+/* 🌟 가장 중요한 부분: 로고 이미지 크기 제한 */
+.header-logo img {
+    height: 50px;         /* 헤더 높이 55px보다 약간 작게 설정하여 여유 공간 확보 */
+    width: auto;          /* 비율 유지 */
+    object-fit: contain;  /* 이미지 왜곡 방지 */
+    display: block;
+    /* SVG 이미지 특유의 하단 여백 제거 */
+        vertical-align: middle;
+}
+
+.header-logo-text { /* header-logo-text logo-text */
+    font-size: 24px;
+    font-weight: bold;
+    color: #f7a01d; /* UFC 느낌의 주황색 계열 (주요 브랜드 색상) */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 메인 네비게이션 메뉴 스타일 */
+.header-content ul {
+    list-style: none;
+        display: flex;
+        align-items: center; /* 메뉴 항목들도 수직 중앙 정렬 */
+        height: 100%;
+        margin: 0;
+        padding: 0;
+}
+
+.header-content a {  /* main-nav-menu */
+    display: block;
+    padding: 0 18px;
+    line-height: 55px; /* 네비게이션 바 높이와 동일하게 하여 수직 가운데 정렬 */
+    color: #cccccc; /* 기본 메뉴 텍스트 색상 */
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.header-content a:hover {
+    color: white; /* 호버 시 색상 변경 */
+    background-color: #1a1a1a; /* 호버 시 배경색 변경 */
+}
+
+/* 현재 활성화된 메뉴 스타일 (이미지의 '작업 분석' 부분 스타일 참고) */
+.header-content a.active {
+    color: #f7a01d; /* 활성화된 메뉴는 브랜드 색상으로 */
+    /* 활성화된 메뉴 하단에 선 표시 */
+    box-shadow: inset 0 -3px 0 0 #f7a01d;
+}
+
+/* 오른쪽 검색 영역 스타일 */
+.header-search { /* header-search search-area */
+    margin-left: auto; /* 남은 공간을 모두 차지하여 오른쪽으로 밀어냅니다. */
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ⭐ 사용자 아이디와 검색창 사이의 간격을 15px 확보 (적절한 간격) */
+}
+
+.header-search form { /* 12.23 추가 */
+    display: flex; /* 내부의 input과 button을 가로로 붙임 */
+}
+
+.header-search input[type="text"] {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px 0 0 4px; /* 왼쪽만 둥글게 */
+    background-color: #2e2e2e;
+    color: white;
+    font-size: 14px;
+    width: 200px;
+    outline: none;
+}
+
+.header-search input[type="text"]::placeholder {
+    color: #888;
+}
+
+.header-search-btn { /* header-search-btn search-btn */
+    padding: 8px 12px;
+    border: none;
+    border-radius: 0 4px 4px 0; /* 오른쪽만 둥글게 */
+    background-color: #4a4a4a;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    height: 35px; /* input과 높이 맞추기 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-search-btn:hover {
+    background-color: #5a5a5a;
+}
+
+.user-id-display {
+    color: #ff8c00; /* 주황색 계열 */
+    font-weight: bold;
+    margin-right: 15px; /* 로그아웃 버튼과의 간격 */
+    padding: 8px 0;
+    display: inline-block;
+}
+
+/* 2. 로그인 ID 스타일 조정 */
+.user-id-display {
+    color: #ff8c00; /* 주황색 */
+    font-weight: normal; /* 굵기 제거 */
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+
+/* 어드민 전용 무지개 텍스트 효과 */
+.admin-id-display {
+    font-weight: 800; /* 어드민이니까 좀 더 두껍게 */
+    background: linear-gradient(to right, #ff2400, #e81d1d, #e8b71d, #1de840, #1ddde8, #2b1de8, #dd00f3, #ff2400);
+    background-size: 200% auto;
+    -webkit-background-clip: text; /* 크롬, 사파리용 */
+    background-clip: text;        /* 표준 */
+    color: transparent;           /* 글자색을 투명하게 해야 배경(무지개)이 보임 */
+    animation: rainbow_move 3s linear infinite;
+    display: inline-block;        /* 애니메이션이 끊기지 않게 */
+}
+
+/* 무지개가 흐르는 애니메이션 */
+@keyframes rainbow_move {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+/* 2. 로그인/로그아웃 메뉴를 왼쪽으로 이동 */
+/* 현재 네비게이션이 중앙에 있는 구조를 가정하고, 메뉴를 왼쪽으로 이동시킵니다. */
+.header-content ul {
+    /* Flexbox를 사용하여 ul 내부의 요소 정렬 */
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* 3. 로그아웃 링크 스타일 (선택 사항: ID와 구분되도록) */
+.logout-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9em; /* ID보다 약간 작게 */
+    white-space: nowrap;
+}
+
+/* 1. 드롭다운 부모: 헤더 높이를 꽉 채우도록 설정 */
+.dropdown {
+    position: relative;
+    display: flex;        /* 내부 정렬을 위해 flex 사용 */
+    align-items: center;  /* 메뉴 텍스트 수직 중앙 정렬 */
+    height: 55px;         /* 헤더 높이와 일치 */
+}
+
+/* 2. 드롭다운 박스: 위치를 'top: 55px'로 강제 고정 */
+.dropdown-content {
+    display: none !important; /* 🌟 평소엔 존재 자체를 지움 */
+    position: absolute;
+    top: 55px;               /* 🌟 위치 문제 해결: 헤더 높이만큼 정확히 내림 */
+    left: 0;
+    background-color: #000000;
+    min-width: 160px;        /* 글자가 잘리지 않게 너비 확보 */
+    border: 1px solid #282828;
+    border-top: none;
+    z-index: 10000;          /* 다른 요소보다 무조건 위에 */
+    box-shadow: 0px 8px 16px rgba(0,0,0,0.8);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* 3. 드롭다운 내부 링크: 겹침 현상 해결 */
+.dropdown-content a {
+    display: block !important;
+    padding: 12px 16px !important;
+    line-height: 1.4 !important; /* 🌟 겹침 해결: 상위 메뉴의 55px 줄간격을 무시함 */
+    color: #cccccc !important;
+    font-size: 13px;
+    text-align: left;
+    text-decoration: none;
+    transition: background 0.2s;
+    white-space: nowrap;         /* 글자가 한 줄로 나오게 고정 */
+}
+
+/* 4. 마우스를 올렸을 때만 박스를 보여줌 */
+.dropdown:hover .dropdown-content {
+    display: block !important;
+}
+
+/* 5. 내부 링크 호버 효과 */
+.dropdown-content a:hover {
+    background-color: #1a1a1a;
+    color: #ffffff !important;
+}
+
+/* 🌟 하위 메뉴 내부 활성화 스타일 (현재 페이지 표시) */
+.dropdown-content a.inner-active {
+    color: #f7a01d; /* 주황색 포인트만 깔끔하게 적용 */
+    background-color: #0d0d0d;
+}
+
+/* 상위 메뉴에 마우스를 올리면 하위 메뉴 표시 */
+.dropdown:hover .dropdown-content a{
+   color: white !important;
+       background-color: #1a1a1a;
+   }/* 마우스 호버 시 박스 표시 */
+}
+
+.dropdown:hover .dropdown-content{
+    display: block !important; /* 마우스 호버 시 내부 링크 표시 */
+                               }
+}
+
+/* 부모 메뉴 호버 시 화살표 등 시각적 보조 (선택 사항) */
+.dropbtn::after {
+    content: ' ▼';
+    font-size: 10px;
+    vertical-align: middle;
+    color: #888;
+}

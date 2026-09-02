@@ -1,0 +1,91 @@
+/* --- 기본 푸터 스타일 (유지) --- */
+.footer {
+    background-color: #1a1a1a;
+    color: #cccccc;
+    padding: 60px 5%; /* 영역을 넓히기 위해 60px 유지 */
+    text-align: left; /* 전체 텍스트를 왼쪽으로 정렬 */
+    font-size: 0.9em;
+}
+
+/* --- 4단 그리드 컨테이너 --- */
+.footer-container {
+    display: grid;
+    /* 1열은 넓게, 나머지 3열은 동일한 비율로 설정 */
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 50px; /* 열 사이의 간격 */
+    margin-bottom: 40px;
+    border-bottom: 1px solid #333333; /* 섹션 구분선 */
+    padding-bottom: 30px;
+}
+
+/* --- 개별 섹션 스타일 --- */
+.footer-section h4 {
+    color: #ffffff; /* 섹션 제목을 흰색으로 강조 */
+    font-size: 1.1em;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.footer-section ul {
+    list-style: none; /* 리스트 점 제거 */
+    padding: 0;
+    margin: 0;
+}
+
+.footer-section ul li {
+    margin-bottom: 8px;
+}
+
+.footer-section a, .company-address, .copyright, .footer-section p {
+    color: #aaaaaa; /* 일반 텍스트는 연한 회색 */
+    text-decoration: none;
+    line-height: 1.6;
+}
+
+.footer-logo {
+    color: #ff9900; /* 로고 색상을 강조 */
+    font-size: 1.8em;
+    font-weight: 900;
+    margin-bottom: 15px;
+}
+
+.footer-social-icons a {
+    font-size: 1.5em;
+    margin-right: 15px;
+    color: #ff9900; /* 소셜 아이콘 색상 */
+}
+
+/* --- 가장 하단 바 스타일 --- */
+.footer-bottom-bar {
+    border-top: 1px solid #333333; /* 회색 선 */
+    padding-top: 15px;
+    text-align: center;
+}
+
+.footer-bottom-bar p {
+    color: #777777;
+    font-size: 0.85em;
+    margin: 0;
+}
+
+
+/* --- 모바일 대응: 화면이 좁아지면 1열 구조로 변경 --- */
+@media (max-width: 768px) {
+    .footer-container {
+        /* 모바일에서는 모두 1열로 세로로 쌓이도록 변경 */
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .footer-section {
+        /* 각 섹션 사이에 선을 넣어 구분 */
+        border-bottom: 1px solid #333333;
+        padding-bottom: 20px;
+    }
+
+    .logo-info {
+        /* 첫 섹션은 선을 없애 깔끔하게 */
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+}

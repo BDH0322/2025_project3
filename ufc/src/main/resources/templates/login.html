@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>로그인 / 회원가입</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+
+
+<div class="background-container">
+    <img src="/images/login-bg.jpg" alt="Night City Background" class="background-image">
+    <div class="background-overlay"></div>
+</div>
+
+<div class="login-register-card">
+    <div class="tabs">
+        <button class="tab-button active" id="loginTab">로그인</button>
+        <button class="tab-button" id="registerTab">회원가입</button>
+    </div>
+
+
+
+    <form th:action="@{/loginprocess}" method="post" class="login-form active">
+        <div class="social-login">
+            <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-icon twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+        </div>
+        <div class="input-group">
+            <input type="text" placeholder="아디" required name="loginId">
+        </div>
+        <div class="input-group">
+            <input type="password" placeholder="비밀번호" required name="loginPw">
+
+        </div>
+        <div class="remember-password">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">비밀번호 기억하기</label>
+        </div>
+        <button type="submit" class="submit-button">로그인</button>
+    </form>
+
+    <form th:action="@{/membersave}" th:object="${memberDTO}" method="post" class="register-form" id="registerForm">
+        <div class="input-group id-check-group">
+            <input type="text" th:field="*{id}" placeholder="아이디 (4자 이상)" required id="registerIdInput">
+            <button type="button" class="check-button" id="idCheckButton">확인</button>
+        </div>
+        <div id="idCheckMessage"></div>
+
+        <div class="input-group">
+            <input type="password" th:field="*{password}" placeholder="비밀번호" required id="passwordInput">
+            <div id="passwordMessage" style="color:red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+
+        <div class="input-group">
+            <input type="password" th:field="*{password_confirm}" placeholder="비밀번호 확인" required id="passwordConfirmInput">
+            <div id="passwordConfirmMessage" style="color:red; font-size: 0.9em; margin-top: 5px;"></div>
+        </div>
+        <div class="input-group">
+            <input type="text" th:field="*{name}" placeholder="이름" required>
+        </div>
+        <div class="input-group">
+            <input type="email" th:field="*{email}" placeholder="이메일" required>
+        </div>
+        <div class="input-group">
+            <input type="date" th:field="*{birth}" placeholder="생년월 (YYYY-MD-DD)" required>
+        </div>
+        <div class="input-group">
+            <input type="text" th:field="*{phone}" placeholder="핸드폰번호 (예: 01012345678)" pattern="[0-9]{10,11}" title="숫자 10~11자" required>
+        </div>
+        <div th:if="${errorMessage}" class="error-message" style="color:red; margin-bottom:15px;">
+            <p th:text="${errorMessage}"></p>
+        </div>
+
+
+        <button type="submit" class="submit-button" id="registerSubmitButton">회원가입</button>
+    </form>
+</div>
+<script>
+
+    function processAlertMessage(){
+
+        /*
+        $\text{URL}$의 쿼리 파라미터(Query Parameters)를 쉽게 다루기 위한 객체를 생성 하는 명령어
+        이 코드가 없으면 url 문자열 전체를 직접 분석해서 메세지나 에러값을 추출해야 하지만
+        이 코드를 사용하면 자바스크립트 객체나 맵처럼 파라미터에 접근할 수 있게 된다.
+
+
+        window.location.search
+        현재 브라우저의 $\text{URL}$에서 쿼리 파라미터 부분만 문자열로 가져온다
+        http://localhost:8080/login?status=fail&msg=에러 일때,
+        window.location.search의 값은 ?status=fail&msg=에러 이다.
+
+
+        new URLSearchParams()
+        자바스크립트의 내장 클래스로 url의 쿼리 문자열을 파싱하여 키-값 쌍(Key-Value pairs)의 컬렉션을 만들어주는 생성자
+        이 객체는 파라미터를 찾거나(.has()), 값을 가져오거나(.get()), 반복문으로 순회하는 등의 유용한 메서드를 제공
+
+        예시
+        ...?error=true =>urlParams.has('error')=>true  (로그인 실패했는지 확인)
+        ...?status=fail => urlParams.get('error')=>fail (상태값 가져오기)
+        ...?msg=... => urlParams.get('msg')=> "회원가입이 완료되었습니다." (메시지 내용 가져오기)
+        */
+        const urlParams = new URLSearchParams(window.location.search);
+
+        //로그인 실패 메세지 처리
+        const isLoginError = urlParams.has('error');
+        if(isLoginError){
+            alert("로그인에 실패했습니다. 아이디 또는 비밀번호를 다시 확인해주세요.");
+            history.replaceState(null,null,location.pathname);//URL 정리
+
+            //로그인 탭으로 이동(이미 그 탭에 있지만 명시적으로)
+            //html 문세에서 $\text{ID}$가 'loginTab'인 요소를 찾는다.
+            //document.getElementById('loginTab').click();
+            //click 대신 dom 직접 조작으로 확실하게 탭 전환
+            const loginTab = document.getElementById('loginTab');
+            const registerTab = document.getElementById('registerTab');
+            const loginForm = document.querySelector('.login-form');
+            const registerForm = document.querySelector('.register-form');
+            if(loginTab && registerTab && loginForm && registerForm){
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+            }
+
+            return;
+        }
+        //2. 기존 회원가입 성공/실패 메시지 처리(msg,status 파라미터 처리 로직 유지)
+        const status = urlParams.get('status');
+        const msg = urlParams.get('msg');
+
+        if(msg){
+            const decodedMessage = decodeURIComponent(msg);
+            alert(decodedMessage);
+
+            if(status === 'success' || status ==='fail'){
+                //첫번째 null은 세션기록을 항목에 연결할 상태객체
+                //주로 개발자가 $\text{URL}$과 연결하여 데이터를 저장하고 싶을 때 사용한다.
+                //ajax기반 페이지에서 현재 필터링 상태나 스크롤 위치를 첫번째에 객체 입력함으로 써 저장가능
+                //********2번째 인수
+                //브라우저 기록 항목 제목
+                //무시해도 됨  null로 고정, 역사적인 이유로  이러한 인수가 남아있다고 함
+                //****3번째 인수
+                //새로 설정할 $\text{URL}$이다.
+                //location은 현재 브라우저의 주소 정보를 담고 있는 객체이다.
+                //pathname은 url 중에서 도메인(http:localhost:8000)이후의 경로만 나타낸다.
+                //쿼리 파라미터(?)는 제외한다.
+                //$\text{URL}$이 http://localhost:8080/login?error=true 일때,
+                //location.pathname은 /login 이 된다.
+                // /login?error=true => /login 으로 정리되어 깨끗해짐
+                //(memberDTO 유지를 위해 FlashAttribute는 그대로 둡니다.)
+                history.replaceState(null,null,location.pathname);
+
+               }
+
+               if(status==='fail'){
+                    const registerTab = document.getElementById('registerTab');
+                    const loginForm = document.querySelector('.login-form');
+                    const registerForm = document.querySelector('.register-form');
+
+                    if(registerTab && loginForm && registerForm){
+                        registerTab.classList.add('active');
+                        document.getElementById('loginTab').classList.remove('active');
+                        registerForm.classList.add('active');
+                        loginForm.classList.remove('active');
+                    }
+                   }
+                 }
+
+    }
+processAlertMessage(); // 함수 호출
+
+
+</script>
+
+
+
+<script th:src="@{/js/login.js}"></script>
+</body>
+</html>

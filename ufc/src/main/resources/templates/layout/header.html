@@ -1,0 +1,59 @@
+<header th:fragment="header" class="header-container" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="header-logo">
+        <a th:href="@{/}">
+            <img th:src="@{/images/ufcgg_logo.svg}" alt="UFC.GG 메인으로 이동" style="cursor: pointer;">
+        </a>
+    </div>
+
+
+
+    <nav class="header-content">
+        <ul>
+            <li><a href="/" th:class="${currentUri == '/' ? 'active' : ''}">메인</a></li>
+            <li><a href="/trend" th:class="${#strings.startsWith(currentUri, '/trend') ? 'active' : ''}">트렌드</a></li>
+            <li><a href="/rank" th:class="${#strings.startsWith(currentUri, '/rank') ? 'active' : ''}">순위표</a></li>
+            <li class="dropdown">
+                <a href="javascript:void(0)"
+                   th:class="${currentUri.startsWith('/predictAI') ? 'active dropbtn' : 'dropbtn'}">갈라치기</a>
+
+                <ul class="dropdown-content">
+                        <li>
+                            <a href="/predictAI"
+                               th:class="${currentUri == '/predictAI' ? 'inner-active':''}">
+                                선수 스텟 AI분석
+                            </a>
+                        </li>
+                        <li><a href="/vote/vlist"
+                               th:class="${currentUri == '/vote/vlist' ? 'inner-active':''}">
+                                경기 투표 게시판
+                        </a></li>
+
+                </ul>
+            </li>
+            <li><a href="/community" th:class="${#strings.startsWith(currentUri, '/community') ? 'active' : ''}">커뮤니티</a></li>
+            <li class="login-menu-item" th:unless="${session.loginstate}">
+                <a th:href="@{/login}" th:class="${currentUri == '/login' ? 'active': ''}">로그인</a>
+            </li>
+
+
+            <li class="login-menu-item" th:if="${session.loginstate}">
+                <a th:href="@{/logout}" class="logout-link">로그아웃</a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <div class="header-search">
+        <th:block th:if="${session.loginstate}">
+            <th class="user-label-th">사용자:</th>
+            <span class="admin-id-display" th:if="${#strings.toString(session.admin) == '1'}" th:text="'🛡️' + ${session.id}"></span>
+            <span class="user-id-display" th:if="${#strings.toString(session.admin) != '1'}" th:text="${session.id}"></span>
+        </th:block>
+        <form action="/FrontController/integratedSearch">
+            <input type="text" name="keyword"  placeholder="선수 또는 경기 검색">
+            <button type="submit" class="header-search-btn">🔍</button>
+        </form>
+    </div>
+
+
+</header>

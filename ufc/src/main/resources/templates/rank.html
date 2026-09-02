@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UFC 체급별 공식 랭킹</title>
+
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/footer.css}">
+  <link rel="stylesheet" th:href="@{/css/ranking.css}">
+
+</head>
+<body>
+
+<header th:replace="~{layout/header::header}"></header>
+
+<div class="main-container">
+
+  <div class="mainunder-container">
+    <h1>UFC 체급별 공식 랭킹</h1>
+
+    <div class="all-ranking-container">
+
+      <div th:each="entry : ${rankings.entrySet()}" class="ranking-table-card">
+
+        <h2 class="ranking-division-title" th:text="${entry.key}"></h2>
+
+        <table class="fighter-ranking-table">
+          <thead>
+          <tr><th class="rank-col">순위</th><th class="name-col-full">파이터 이름</th></tr>
+          </thead>
+          <tbody>
+
+          <tr th:each="fighter : ${entry.value}"
+              th:class="${fighter.rankNum == 'C' ? 'ranking-champion' : ''}">
+
+            <td class="rank-col" th:text="${fighter.rankNum}"></td>
+
+            <td class="name-col-full fighter-info">
+              <img th:src="${fighter.imageUrl}"
+                   th:alt="${fighter.name} + ' 이미지'"
+                   class="fighter-thumb">
+
+              <a th:href="@{/fighter/{name}(name=${fighter.name})}" th:text="${fighter.name}">[파이터 이름]</a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<footer th:replace="~{layout/footer::footer}"></footer>
+</body>
+</html>

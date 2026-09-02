@@ -1,0 +1,191 @@
+* {
+
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000000;
+    color: white;
+}
+
+.fighters-section, .user-section, .community-section, .reply-section, .vote-section {
+    width: 800px;
+    Padding: 8px 12px;
+    border: 1px solid #eeeeee;
+    background-color: #383838;
+    text-align: left;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: column; /* 자식 요소들을 세로로 배치 */
+    align-items: center;    /* 가로축 기준 중앙 정렬 */
+    width: 100%;            /* 전체 너비 사용 */
+    padding: 40px 0;       /* 위아래 여백 (선택사항) */
+}
+
+.filter-section {
+    width: 800px;
+    Padding: 8px 12px;
+    border: 1px solid #eeeeee;
+    background-color: #383838;
+    text-align: left;
+}
+
+.fighters-section h2, .user-section h2, .community-section h2, .reply-section h2, .vote-section h2 {
+    margin-top: 0px;
+}
+
+.filter-section {
+    list-style: none; /* <li>에 딸려오는 점 표시 없애기 */
+    display: flex;
+    gap: 20px;
+    cursor: pointer; /* 눌렀을 때 색깔 효과 */
+}
+
+.filter-section li a {
+    color: #ccc;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* side-memo */
+.memo-open-btn {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 100px;
+    background-color: #ff9900;
+    color: black;
+    border: none;
+    cursor: pointer;
+    z-index: 9999;
+    writing-mode: vertical-lr;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+}
+
+.side-memo-window {
+    position: fixed;
+    right: -320px; /* 창 너비보다 더 밀어내기 */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    height: 400px;
+    background: white;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+    transition: right 0.3s ease;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+}
+
+.side-memo-window.active {
+    right: 0;
+}
+
+.memo-header {
+    background: #333;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.memo-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.memo-content {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 검정 배경에 투명도 0.5 적용 */ /* color: #000000; opacity : 0.5; */
+}
+
+.memo-content textarea {
+    width: 100%;
+    height: 330px; /* 헤더 높이 제외한 적당한 높이 */
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    resize: none;
+
+    color: #ffffff;
+    font-size: 16px;
+    line-height: 30px;
+
+    /* 공책 줄무늬 디자인 (linear-gradient 사용) */
+    background: transparent; /* 배경은 부모의 rgba(0,0,0,0.5)를 따라감 */
+    background-image: linear-gradient(#555 1px, transparent 1px); /* 줄 색상 (#555) */
+    background-size: 100% 30px; /* 줄 간격 30px (line-height와 일치시켜야 함) */
+    background-attachment: local; /* 스크롤 시 줄무늬도 같이 이동 */
+}
+
+/* 스크롤바 디자인 */
+.memo-content textarea::-webkit-scrollbar {
+    width: 8px;
+}
+.memo-content textarea::-webkit-scrollbar-thumb {
+    background: #ff9900;
+    border-radius: 10px;
+}
+
+/* 검색창 영역 */
+.integratedSearch {
+    width: 800px;           /* 위 섹션들과 너비 맞춤 */
+    margin-top: 30px;       /* fighters-section과의 간격 (원하는 만큼 조절) */
+    display: flex;          /* 자식을 정렬하기 위해 flex 사용 */
+    justify-content: center; /* 가로 방향 중앙 정렬 */
+    padding: 20px 0;
+}
+
+.main-content-search { /* main-content main-search-container */
+    display: flex;
+    width: 600px; /* 검색창 너비 조정 */
+}
+
+.main-content-search-input {
+    flex-grow: 1; /* 검색창이 가능한 공간을 채우도록 */
+    padding: 15px 20px;
+    font-size: 1em;
+    border: 3px solid #ff9900; /* 오렌지색 테두리 */
+    border-right: none;
+    border-radius: 8px 0 0 8px; /* 왼쪽 모서리만 둥글게 */
+    outline: none;
+    background-color: #333333; /* 어두운 배경 */
+    color: #ffffff;
+}
+
+.main-content-search-button {
+    padding: 15px 20px;
+    font-size: 1em;
+    background-color: #ff9900; /* 오렌지색 버튼 */
+    color: #000000;
+    border: 3px solid #ff9900;
+    border-radius: 0 8px 8px 0; /* 오른쪽 모서리만 둥글게 */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.main-content-search-button:hover {
+    background-color: #e68a00;
+}
+
+/* 투표 아이템 내부 스타일 (선택사항) */
+.vote-section .result-item a {
+    text-decoration: none;
+    color: white;
+}
+
+.vote-section .result-item strong {
+    color: #ff9900; /* 투표 제목 강조 */
+}
