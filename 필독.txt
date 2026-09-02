@@ -7,5 +7,5 @@
   UFC_ALL_FIGHTERS_FOR_DB 엑셀 파일에 있는 선수들의 정보가 테이블에 들어갑니다.
 
 3. UPDATE FIGHTER 파일의 SQL문을 1회 실행해주세요.
-  선수들의 이미지 파일이 FIGHTER 테이블에 선수의 사진이 저장됩니다.
+  선수들의 이미지 파일이 FIGHTER 테이블에 저장됩니다.
 
